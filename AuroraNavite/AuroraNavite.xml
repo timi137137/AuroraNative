@@ -4,9 +4,21 @@
         <name>AuroraNavite</name>
     </assembly>
     <members>
-        <member name="T:AuroraNavite.WebSocket">
+        <member name="T:AuroraNavite.WebSocket.Client">
             <summary>
-            WebSocket 调用类
+            WebSocket 客户端 封装类
+            <para>正向 WebSocket</para>
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.WebSocket.Client.host">
+            <summary>
+            WebSocket服务端地址<para>请记得带端口号</para>
+            </summary>
+        </member>
+        <member name="T:AuroraNavite.WebSocket.Server">
+            <summary>
+            WebSocket 服务器 封装类
+            <para>反向WebSocket</para>
             </summary>
         </member>
     </members>
