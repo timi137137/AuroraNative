@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AuroraNavite</name>
+    </assembly>
+    <members>
+        <member name="T:AuroraNavite.WebSocket">
+            <summary>
+            WebSocket 调用类
+            </summary>
+        </member>
+    </members>
+</doc>
