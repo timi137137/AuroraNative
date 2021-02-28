@@ -4,6 +4,16 @@
         <name>AuroraNavite</name>
     </assembly>
     <members>
+        <member name="T:AuroraNavite.Exceptions.Base">
+            <summary>
+            异常 类 -- 基类
+            </summary>
+        </member>
+        <member name="T:AuroraNavite.Exceptions.WebSocketException">
+            <summary>
+            异常 类 -- 关于WebSocket异常
+            </summary>
+        </member>
         <member name="T:AuroraNavite.WebSocket.Client">
             <summary>
             WebSocket 客户端 封装类

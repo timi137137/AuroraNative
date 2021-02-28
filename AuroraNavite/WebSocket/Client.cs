@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AuroraNavite.Exceptions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -82,6 +83,13 @@ namespace AuroraNavite.WebSocket
                 ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[10240]);
                 WebSocketReceiveResult Result = await WebSocketClient.ReceiveAsync(BytesReceived, CancellationToken.None);
                 Json = JObject.Parse(Encoding.UTF8.GetString(BytesReceived.Array, 0, Result.Count));
+                if (Json["post_type1"].ToString() == "meta_event")
+                {
+                    Console.WriteLine("跳一跳");
+                }
+                else {
+                    Console.WriteLine(Json);
+                }
             }
         }
 
