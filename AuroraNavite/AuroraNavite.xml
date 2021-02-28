@@ -15,6 +15,22 @@
             WebSocket服务端地址<para>请记得带端口号</para>
             </summary>
         </member>
+        <member name="M:AuroraNavite.WebSocket.Client.#ctor">
+            <summary>
+            Client 类构建函数
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.WebSocket.Client.Create">
+            <summary>
+            创建并连接到WebSocket服务器
+            </summary>
+            <returns>连接成功返回true，反而异之</returns>
+        </member>
+        <member name="M:AuroraNavite.WebSocket.Client.Dispose">
+            <summary>
+            立刻中断并释放连接<para>注意！断开后需要重新Create</para>
+            </summary>
+        </member>
         <member name="T:AuroraNavite.WebSocket.Server">
             <summary>
             WebSocket 服务器 封装类
