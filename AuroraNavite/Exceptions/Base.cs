@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AuroraNavite.Exceptions
 {
@@ -9,6 +7,8 @@ namespace AuroraNavite.Exceptions
     /// </summary>
     class Base : Exception
     {
+        #region --变量--
+
         public virtual int errorCode { get; set; }
         public int ErrorCode
         {
@@ -18,9 +18,15 @@ namespace AuroraNavite.Exceptions
             }
         }
 
+        #endregion
+
+        #region --构造函数--
+
         public Base(int Code, string Messgae) : base(Messgae)
         {
             errorCode = Code;
         }
+
+        #endregion
     }
 }

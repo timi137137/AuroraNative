@@ -5,9 +5,13 @@
     /// </summary>
     class JsonException : Base
     {
+        #region --构造函数--
+
         public JsonException(int Code, string Messgae) : base(Code, Messgae)
         {
             errorCode = Code;
         }
+
+        #endregion
     }
 }

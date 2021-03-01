@@ -4,9 +4,112 @@
         <name>AuroraNavite</name>
     </assembly>
     <members>
+        <member name="T:AuroraNavite.Event">
+            <summary>
+            事件类
+            </summary>
+        </member>
+        <member name="T:AuroraNavite.EventArgs.Base">
+            <summary>
+            提供用于描述事件参数的基础类, 该类是抽象的
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.EventArgs.Base.TimeStamp">
+            <summary>
+            事件发生的时间戳
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.EventArgs.Base.SelfID">
+            <summary>
+            收到事件的机器人QQ号
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.EventArgs.Base.PostType">
+            <summary>
+            上报类型
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.EventArgs.Base.#ctor(System.Int64,System.Int64,System.String)">
+            <summary>
+            初始化 <see cref="T:AuroraNavite.EventArgs.Base"/> 类的新实例
+            </summary>
+            <param name="TimeStamp">事件发送的时间戳</param>
+            <param name="SelfID">收到事件的机器人QQ号</param>
+            <param name="PostType">上报类型</param>
+        </member>
+        <member name="T:AuroraNavite.EventArgs.HeartBeatArgs">
+            <summary>
+            提供用于描述元事件中心跳事件参数的类
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.EventArgs.HeartBeatArgs.Status">
+            <summary>
+            状态信息
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.EventArgs.HeartBeatArgs.Interval">
+            <summary>
+            到下次心跳的间隔，单位毫秒
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.EventArgs.HeartBeatArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.Object,System.Int64)">
+            <summary>
+            初始化 <see cref="T:AuroraNavite.EventArgs.MetaEventArgs"/> 类的新实例
+            </summary>
+            <param name="TimeStamp">事件发生的时间戳</param>
+            <param name="SelfID">收到事件的机器人QQ号</param>
+            <param name="PostType">上报类型</param>
+            <param name="MetaEventType">元事件类型</param>
+            <param name="Status">状态信息</param>
+            <param name="Interval">到下次心跳的间隔，单位毫秒</param>
+        </member>
+        <member name="T:AuroraNavite.EventArgs.LifeCycleArgs">
+            <summary>
+            提供用于描述元事件中生命周期事件参数的类
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.EventArgs.LifeCycleArgs.SubType">
+            <summary>
+            事件子类型
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.EventArgs.LifeCycleArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String)">
+            <summary>
+            初始化 <see cref="T:AuroraNavite.EventArgs.MetaEventArgs"/> 类的新实例
+            </summary>
+            <param name="TimeStamp">事件发生的时间戳</param>
+            <param name="SelfID">收到事件的机器人QQ号</param>
+            <param name="PostType">上报类型</param>
+            <param name="MetaEventType">元事件类型</param>
+            <param name="SubType">事件子类型</param>
+        </member>
+        <member name="T:AuroraNavite.EventArgs.MetaEventArgs">
+            <summary>
+            提供用于描述元事件参数的基础类, 该类是抽象的
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.EventArgs.MetaEventArgs.MetaEventType">
+            <summary>
+            元事件类型
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.EventArgs.MetaEventArgs.#ctor(System.Int64,System.Int64,System.String,System.String)">
+            <summary>
+            初始化 <see cref="T:AuroraNavite.EventArgs.Base"/> 类的新实例
+            </summary>
+            <param name="TimeStamp">事件发生的时间戳</param>
+            <param name="SelfID">收到事件的机器人QQ号</param>
+            <param name="PostType">上报类型</param>
+            <param name="MetaEventType">元事件类型</param>
+        </member>
         <member name="T:AuroraNavite.Exceptions.Base">
             <summary>
             异常 类 -- 基类
+            </summary>
+        </member>
+        <member name="T:AuroraNavite.Exceptions.JsonException">
+            <summary>
+            异常 类 -- 关于Json异常
             </summary>
         </member>
         <member name="T:AuroraNavite.Exceptions.WebSocketException">
@@ -25,9 +128,9 @@
             WebSocket服务端地址<para>请记得带端口号</para>
             </summary>
         </member>
-        <member name="M:AuroraNavite.WebSocket.Client.#ctor">
+        <member name="F:AuroraNavite.WebSocket.Client.EventHook">
             <summary>
-            Client 类构建函数
+            事件钩子
             </summary>
         </member>
         <member name="M:AuroraNavite.WebSocket.Client.Create">

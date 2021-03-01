@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AuroraNavite
+﻿namespace AuroraNavite
 {
     class Utils
     {

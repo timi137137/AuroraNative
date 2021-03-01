@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AuroraNavite.WebSocket
+﻿namespace AuroraNavite.WebSocket
 {
     /// <summary>
     /// WebSocket 服务器 封装类

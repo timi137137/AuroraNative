@@ -5,7 +5,8 @@
     /// </summary>
     class WebSocketException : Base
     {
-        public WebSocketException(int Code, string Messgae) : base(Code,Messgae) {
+        public WebSocketException(int Code, string Messgae) : base(Code, Messgae)
+        {
             errorCode = Code;
         }
     }

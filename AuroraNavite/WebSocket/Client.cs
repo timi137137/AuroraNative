@@ -1,8 +1,6 @@
-﻿using AuroraNavite.Exceptions;
-using Newtonsoft.Json;
+﻿using AuroraNavite.EventArgs;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -22,25 +20,19 @@ namespace AuroraNavite.WebSocket
         /// <summary>
         /// WebSocket服务端地址<para>请记得带端口号</para>
         /// </summary>
-        public string host {
+        public string host
+        {
             private get { return Host; }
             set { Host = value; }
         }
+        /// <summary>
+        /// 事件钩子
+        /// </summary>
+        public Event EventHook;
 
         private ClientWebSocket WebSocketClient;
         private JObject Json;
         private Task WaitFeedback;
-
-        #endregion
-
-        #region --构造函数--
-
-        /// <summary>
-        /// Client 类构建函数
-        /// </summary>
-        public Client() {
-            
-        }
 
         #endregion
 
@@ -69,7 +61,8 @@ namespace AuroraNavite.WebSocket
         /// <summary>
         /// 立刻中断并释放连接<para>注意！断开后需要重新Create</para>
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             WebSocketClient.Dispose();
             WebSocketClient.Abort();
         }
@@ -78,17 +71,51 @@ namespace AuroraNavite.WebSocket
 
         #region --私有函数--
 
-        private async void Feedback() {
-            while (true) {
-                ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[10240]);
+        private async void Feedback()
+        {
+            while (true)
+            {
+                ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[5120]);
                 WebSocketReceiveResult Result = await WebSocketClient.ReceiveAsync(BytesReceived, CancellationToken.None);
                 Json = JObject.Parse(Encoding.UTF8.GetString(BytesReceived.Array, 0, Result.Count));
-                if (Json["post_type1"].ToString() == "meta_event")
+                switch ((string)Json.GetValue("post_type"))
                 {
-                    Console.WriteLine("跳一跳");
-                }
-                else {
-                    Console.WriteLine(Json);
+                    case "meta_event":
+                        if ((string)Json.GetValue("meta_event_type") == "lifecycle")
+                        {
+                            EventHook.LifeCycle(Json.ToObject<LifeCycleArgs>());
+                        }
+                        else if ((string)Json.GetValue("meta_event_type") == "heartbeat")
+                        {
+                            EventHook.HeartBeat(Json.ToObject<HeartBeatArgs>());
+                        }
+                        break;
+                    case "message":
+                        if ((string)Json.GetValue("message_type") == "private")
+                        {
+                            EventHook.PrivateMessage(Json.ToObject<PrivateMessageArgs>());
+                        }
+                        else if ((string)Json.GetValue("message_type") == "group")
+                        {
+                            EventHook.GroupMessage(Json.ToObject<GroupMessageArgs>());
+                        }
+                        break;
+                    case "request":
+                        break;
+                    case "notice":
+                        break;
+                    case "message_sent":
+                        break;
+                    default:
+                        if (Json.TryGetValue("echo", out JToken JsonResult))
+                        {
+                            //TODO 跳给API
+                        }
+                        else
+                        {
+                            throw new Exceptions.JsonException(-1, "错误！无法解析推送的事件！\n" + Json);
+                        }
+                        break;
                 }
             }
         }
