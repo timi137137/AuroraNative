@@ -21,7 +21,7 @@
         /// <param name="RawMessage">原始消息内容</param>
         /// <param name="Font">字体</param>
         /// <param name="Sender">发送者信息</param>
-        public PrivateMessageArgs(long TimeStamp, long SelfID, string PostType, string MessageType, string SubType, int MessageID, long UserID, string Message, string RawMessage, int Font, object Sender) : base(TimeStamp, SelfID, PostType, MessageType, SubType, MessageID, UserID, Message, RawMessage, Font, Sender) { }
+        public PrivateMessageArgs(long TimeStamp, long SelfID, string PostType, string MessageType, string SubType, int MessageID, long UserID, string Message, string RawMessage, int Font, Sender Sender) : base(TimeStamp, SelfID, PostType, MessageType, SubType, MessageID, UserID, Message, RawMessage, Font, Sender) { }
 
         #endregion
     }

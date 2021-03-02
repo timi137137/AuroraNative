@@ -55,7 +55,7 @@ namespace AuroraNavite.EventArgs
         /// 发送者信息
         /// </summary>
         [JsonProperty(PropertyName = "sender")]
-        public object Sender { get; private set; }
+        public Sender Sender { get; private set; }
 
         #endregion
 
@@ -75,7 +75,7 @@ namespace AuroraNavite.EventArgs
         /// <param name="RawMessage">原始消息内容</param>
         /// <param name="Font">字体</param>
         /// <param name="Sender">发送者信息</param>
-        public MessageEventArgs(long TimeStamp, long SelfID, string PostType, string MessageType, string SubType, int MessageID, long UserID, string Message, string RawMessage, int Font, object Sender) : base(TimeStamp, SelfID, PostType)
+        public MessageEventArgs(long TimeStamp, long SelfID, string PostType, string MessageType, string SubType, int MessageID, long UserID, string Message, string RawMessage, int Font, Sender Sender) : base(TimeStamp, SelfID, PostType)
         {
             this.MessageType = MessageType;
             this.SubType = SubType;

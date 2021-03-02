@@ -101,8 +101,66 @@ namespace AuroraNavite.WebSocket
                         }
                         break;
                     case "request":
+                        if ((string)Json.GetValue("request_type") == "friend")
+                        {
+                            EventHook.FriendAddRequest(Json.ToObject<FriendAddRequsetArgs>());
+                        }
+                        else if ((string)Json.GetValue("request_type") == "group")
+                        {
+                            EventHook.GroupAddRequest(Json.ToObject<GroupAddRequestArgs>());
+                        }
                         break;
                     case "notice":
+                        switch ((string)Json.GetValue("notice_type"))
+                        {
+                            case "group_upload":
+                                break;
+                            case "group_admin":
+                                break;
+                            case "group_decrease":
+                                break;
+                            case "group_increase":
+                                break;
+                            case "group_ban":
+                                break;
+                            case "friend_add":
+                                break;
+                            case "group_recall":
+                                break;
+                            case "friend_recall":
+                                break;
+                            case "notify":
+                                switch ((string)Json.GetValue("sub_type"))
+                                {
+                                    case "poke":
+                                        if (Json.TryGetValue("group_id", out _))
+                                        {
+
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                        break;
+                                    case "lucky_king":
+                                        break;
+                                    case "honor":
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case "group_card":
+                                break;
+                            case "offline_file":
+                                break;
+                            case "client_status":
+                                break;
+                            case "essence":
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     case "message_sent":
                         break;
@@ -113,7 +171,7 @@ namespace AuroraNavite.WebSocket
                         }
                         else
                         {
-                            throw new Exceptions.JsonException(-1, "错误！无法解析推送的事件！\n" + Json);
+                            throw new Exceptions.JsonException(-1, "接到无法解析的事件！\n" + Json);
                         }
                         break;
                 }
