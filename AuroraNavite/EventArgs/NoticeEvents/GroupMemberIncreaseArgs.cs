@@ -3,7 +3,7 @@
     /// <summary>
     /// 提供用于描述通知事件中群成员增加事件参数的类
     /// </summary>
-    public sealed class GroupMemberIncreaseEventArgs : GroupNoticeArgs
+    public sealed class GroupMemberIncreaseArgs : GroupNoticeArgs
     {
         #region --构造函数--
 
@@ -18,7 +18,7 @@
         /// <param name="GroupID">群号</param>
         /// <param name="OperatorID">操作者 QQ 号（如果是主动退群，则和 user_id 相同）</param>
         /// <param name="UserID">加入者 QQ 号</param>
-        public GroupMemberIncreaseEventArgs(long TimeStamp, long SelfID, string PostType, string NoticeType, string SubType, long GroupID, long OperatorID, long UserID) : base(TimeStamp, SelfID, PostType, NoticeType, SubType, GroupID, OperatorID, UserID) { }
+        public GroupMemberIncreaseArgs(long TimeStamp, long SelfID, string PostType, string NoticeType, string SubType, long GroupID, long OperatorID, long UserID) : base(TimeStamp, SelfID, PostType, NoticeType, SubType, GroupID, OperatorID, UserID) { }
 
         #endregion
     }

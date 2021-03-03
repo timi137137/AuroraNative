@@ -81,86 +81,16 @@ namespace AuroraNavite.WebSocket
                 switch ((string)Json.GetValue("post_type"))
                 {
                     case "meta_event":
-                        if ((string)Json.GetValue("meta_event_type") == "lifecycle")
-                        {
-                            EventHook.LifeCycle(Json.ToObject<LifeCycleArgs>());
-                        }
-                        else if ((string)Json.GetValue("meta_event_type") == "heartbeat")
-                        {
-                            EventHook.HeartBeat(Json.ToObject<HeartBeatArgs>());
-                        }
+                        MetaEvents(Json);
                         break;
                     case "message":
-                        if ((string)Json.GetValue("message_type") == "private")
-                        {
-                            EventHook.PrivateMessage(Json.ToObject<PrivateMessageArgs>());
-                        }
-                        else if ((string)Json.GetValue("message_type") == "group")
-                        {
-                            EventHook.GroupMessage(Json.ToObject<GroupMessageArgs>());
-                        }
+                        MessageEvents(Json);
                         break;
                     case "request":
-                        if ((string)Json.GetValue("request_type") == "friend")
-                        {
-                            EventHook.FriendAddRequest(Json.ToObject<FriendAddRequsetArgs>());
-                        }
-                        else if ((string)Json.GetValue("request_type") == "group")
-                        {
-                            EventHook.GroupAddRequest(Json.ToObject<GroupAddRequestArgs>());
-                        }
+                        RequestEvents(Json);
                         break;
                     case "notice":
-                        switch ((string)Json.GetValue("notice_type"))
-                        {
-                            case "group_upload":
-                                break;
-                            case "group_admin":
-                                break;
-                            case "group_decrease":
-                                break;
-                            case "group_increase":
-                                break;
-                            case "group_ban":
-                                break;
-                            case "friend_add":
-                                break;
-                            case "group_recall":
-                                break;
-                            case "friend_recall":
-                                break;
-                            case "notify":
-                                switch ((string)Json.GetValue("sub_type"))
-                                {
-                                    case "poke":
-                                        if (Json.TryGetValue("group_id", out _))
-                                        {
-
-                                        }
-                                        else
-                                        {
-
-                                        }
-                                        break;
-                                    case "lucky_king":
-                                        break;
-                                    case "honor":
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            case "group_card":
-                                break;
-                            case "offline_file":
-                                break;
-                            case "client_status":
-                                break;
-                            case "essence":
-                                break;
-                            default:
-                                break;
-                        }
+                        NoticeEvents(Json);
                         break;
                     case "message_sent":
                         break;
@@ -175,6 +105,115 @@ namespace AuroraNavite.WebSocket
                         }
                         break;
                 }
+            }
+        }
+
+        private void MetaEvents(JObject Json)
+        {
+            if ((string)Json.GetValue("meta_event_type") == "lifecycle")
+            {
+                EventHook.LifeCycle(Json.ToObject<LifeCycleArgs>());
+            }
+            else if ((string)Json.GetValue("meta_event_type") == "heartbeat")
+            {
+                EventHook.HeartBeat(Json.ToObject<HeartBeatArgs>());
+            }
+        }
+
+        private void MessageEvents(JObject Json)
+        {
+            if ((string)Json.GetValue("message_type") == "private")
+            {
+                EventHook.PrivateMessage(Json.ToObject<PrivateMessageArgs>());
+            }
+            else if ((string)Json.GetValue("message_type") == "group")
+            {
+                EventHook.GroupMessage(Json.ToObject<GroupMessageArgs>());
+            }
+        }
+
+        private void RequestEvents(JObject Json)
+        {
+            if ((string)Json.GetValue("request_type") == "friend")
+            {
+                EventHook.FriendAddRequest(Json.ToObject<FriendAddRequsetArgs>());
+            }
+            else if ((string)Json.GetValue("request_type") == "group")
+            {
+                EventHook.GroupAddRequest(Json.ToObject<GroupAddRequestArgs>());
+            }
+        }
+
+        private void NoticeEvents(JObject Json)
+        {
+            switch ((string)Json.GetValue("notice_type"))
+            {
+                case "group_upload":
+                    EventHook.GroupUpload(Json.ToObject<GroupUploadArgs>());
+                    break;
+                case "group_admin":
+                    EventHook.GroupManageChange(Json.ToObject<GroupManageChangeArgs>());
+                    break;
+                case "group_decrease":
+                    EventHook.GroupMemberDecrease(Json.ToObject<GroupMemberDecreaseArgs>());
+                    break;
+                case "group_increase":
+                    EventHook.GroupMemberIncrease(Json.ToObject<GroupMemberIncreaseArgs>());
+                    break;
+                case "group_ban":
+                    EventHook.GroupBanSpeak(Json.ToObject<GroupBanSpeakArgs>());
+                    break;
+                case "friend_add":
+                    EventHook.FriendAdd(Json.ToObject<FriendAddArgs>());
+                    break;
+                case "group_recall":
+                    EventHook.GroupMessageRecall(Json.ToObject<GroupMessageRecallArgs>());
+                    break;
+                case "friend_recall":
+                    EventHook.PrivateMessageRecall(Json.ToObject<PrivateMessageRecallArgs>());
+                    break;
+                case "notify":
+                    NotifyEvents(Json);
+                    break;
+                case "group_card":
+                    EventHook.GroupCardVerify(Json.ToObject<GroupCardVerifyArgs>());
+                    break;
+                case "offline_file":
+                    EventHook.GetOfflineFile(Json.ToObject<GetOfflineFileArgs>());
+                    break;
+                case "client_status":
+                    EventHook.ClientStatusChange(Json.ToObject<ClientStatusChangeArgs>());
+                    break;
+                case "essence":
+                    EventHook.EssenceMessageChange(Json.ToObject<EssenceMessageChangeArgs>());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void NotifyEvents(JObject Json)
+        {
+            switch ((string)Json.GetValue("sub_type"))
+            {
+                case "poke":
+                    if (Json.TryGetValue("group_id", out _))
+                    {
+                        EventHook.GroupPoke(Json.ToObject<GroupPokeArgs>());
+                    }
+                    else
+                    {
+                        EventHook.PrivatePoke(Json.ToObject<PrivatePokeArgs>());
+                    }
+                    break;
+                case "lucky_king":
+                    EventHook.GroupRedPoketLuckyKing(Json.ToObject<GroupRedPoketLuckyKingArgs>());
+                    break;
+                case "honor":
+                    EventHook.GroupMemberHonorChange(Json.ToObject<GroupMemberHonorChangeArgs>());
+                    break;
+                default:
+                    break;
             }
         }
 

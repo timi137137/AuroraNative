@@ -12,7 +12,7 @@ namespace AuroraNavite.EventArgs
         /// <summary>
         /// 文件 ID
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
         public string ID { get; private set; }
 
         /// <summary>
@@ -28,9 +28,15 @@ namespace AuroraNavite.EventArgs
         public long Size { get; private set; }
 
         /// <summary>
+        /// 下载链接
+        /// </summary>
+        [JsonProperty(PropertyName = "url", NullValueHandling = NullValueHandling.Ignore)]
+        public string Url { get; private set; }
+
+        /// <summary>
         /// busid ( 目前不清楚有什么作用 )
         /// </summary>
-        [JsonProperty(PropertyName = "busid")]
+        [JsonProperty(PropertyName = "busid", NullValueHandling = NullValueHandling.Ignore)]
         public long BusID { get; private set; }
 
         #endregion
@@ -43,13 +49,15 @@ namespace AuroraNavite.EventArgs
         /// <param name="ID">文件 ID</param>
         /// <param name="Name">文件名</param>
         /// <param name="Size">文件大小 ( 字节数 )</param>
+        /// <param name="Url">下载链接</param>
         /// <param name="BusID">busid ( 目前不清楚有什么作用 )</param>
-        public File(string ID, string Name, long Size, long BusID)
+        public File(string ID, string Name, long Size, string Url, long BusID)
         {
             this.ID = ID;
             this.Name = Name;
             this.Size = Size;
             this.BusID = BusID;
+            this.Url = Url;
         }
 
         #endregion
