@@ -4,6 +4,265 @@
         <name>AuroraNavite</name>
     </assembly>
     <members>
+        <member name="T:AuroraNavite.BaseAttribute">
+            <summary>
+            特性的基类
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.BaseAttribute.Type">
+            <summary>
+            子类型，是抽象的
+            </summary>
+        </member>
+        <member name="T:AuroraNavite.MessageTypeAttribute">
+            <summary>
+            消息事件 特性
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.MessageTypeAttribute.MessageType">
+            <summary>
+            消息事件 枚举
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.MessageTypeAttribute.#ctor(AuroraNavite.MessageType)">
+            <summary>
+            消息事件类型构造函数，初始化 <see cref="T:AuroraNavite.BaseAttribute"/> 类的实例
+            </summary>
+            <param name="MessageType">消息事件类型</param>
+        </member>
+        <member name="M:AuroraNavite.MessageTypeAttribute.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AuroraNavite.MessageTypeAttribute.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuroraNavite.MessageTypeAttribute.Equals(AuroraNavite.MessageTypeAttribute)">
+            <summary>
+            
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AuroraNavite.MessageType">
+            <summary>
+            消息事件 枚举
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.MessageType.private">
+            <summary>
+            私聊消息
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.MessageType.group">
+            <summary>
+            群聊消息
+            </summary>
+        </member>
+        <member name="T:AuroraNavite.MetaEventTypeAttribute">
+            <summary>
+            元事件 特性
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.MetaEventTypeAttribute.MetaEventType">
+            <summary>
+            元事件 枚举
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.MetaEventTypeAttribute.#ctor(AuroraNavite.MetaEventType)">
+            <summary>
+            元事件类型构造函数，初始化 <see cref="T:AuroraNavite.BaseAttribute"/> 类的实例
+            </summary>
+            <param name="MetaEventType">元事件类型</param>
+        </member>
+        <member name="M:AuroraNavite.MetaEventTypeAttribute.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AuroraNavite.MetaEventTypeAttribute.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuroraNavite.MetaEventTypeAttribute.Equals(AuroraNavite.MetaEventTypeAttribute)">
+            <summary>
+            
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AuroraNavite.MetaEventType">
+            <summary>
+            元事件 枚举
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.MetaEventType.lifecycle">
+            <summary>
+            生命周期事件
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.MetaEventType.heartbeat">
+            <summary>
+            心跳事件
+            </summary>
+        </member>
+        <member name="T:AuroraNavite.NoticeTypeAttribute">
+            <summary>
+            通知事件 特性
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.NoticeTypeAttribute.NoticeType">
+            <summary>
+            通知事件 枚举
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.NoticeTypeAttribute.#ctor(AuroraNavite.NoticeType)">
+            <summary>
+            通知事件类型构造函数，初始化 <see cref="T:AuroraNavite.BaseAttribute"/> 类的实例
+            </summary>
+            <param name="NoticeType">通知事件类型</param>
+        </member>
+        <member name="M:AuroraNavite.NoticeTypeAttribute.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AuroraNavite.NoticeTypeAttribute.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuroraNavite.NoticeTypeAttribute.Equals(AuroraNavite.NoticeTypeAttribute)">
+            <summary>
+            
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AuroraNavite.NoticeType">
+            <summary>
+            通知事件 枚举
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.group_upload">
+            <summary>
+            群文件上传
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.group_admin">
+            <summary>
+            群管理员变动
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.group_decrease">
+            <summary>
+            群成员减少
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.group_increase">
+            <summary>
+            群成员增加
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.group_ban">
+            <summary>
+            群禁言
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.friend_add">
+            <summary>
+            好友添加
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.group_recall">
+            <summary>
+            群消息撤回
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.friend_recall">
+            <summary>
+            好友消息撤回
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.notify">
+            <summary>
+            通知
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.group_card">
+            <summary>
+            群成员名片更新
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.offline_file">
+            <summary>
+            接收到离线文件
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.client_status">
+            <summary>
+            其他客户端在线状态变更
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.NoticeType.essence">
+            <summary>
+            精华消息
+            </summary>
+        </member>
+        <member name="T:AuroraNavite.PostTypeAttribute">
+            <summary>
+            上报类型 特性
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.PostTypeAttribute.PostType">
+            <summary>
+            上报类型
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.PostTypeAttribute.#ctor(AuroraNavite.PostType)">
+            <summary>
+            上报类型构造函数，初始化 <see cref="T:AuroraNavite.BaseAttribute"/> 类实例
+            </summary>
+            <param name="PostType">上报类型</param>
+        </member>
+        <member name="T:AuroraNavite.PostType">
+            <summary>
+            上报类型 枚举
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.PostType.MetaEvent">
+            <summary>
+            元事件
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.PostType.Message">
+            <summary>
+            消息事件
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.PostType.Notice">
+            <summary>
+            通知事件
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.PostType.Request">
+            <summary>
+            请求事件
+            </summary>
+        </member>
         <member name="T:AuroraNavite.Event">
             <summary>
             事件类
@@ -140,6 +399,11 @@
             通知事件 - 精华消息变更
             </summary>
             <param name="e">精华消息变更参数</param>
+        </member>
+        <member name="M:AuroraNavite.Event.RouterNotify(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            请勿使用，用于子事件分发
+            </summary>
         </member>
         <member name="T:AuroraNavite.EventArgs.Anonymous">
             <summary>
@@ -823,13 +1087,19 @@
             提供用于描述通知事件中群内戳一戳事件参数的类
             </summary>
         </member>
-        <member name="M:AuroraNavite.EventArgs.GroupPokeArgs.#ctor(System.String,System.String,System.String,System.Int64,System.Int64)">
+        <member name="P:AuroraNavite.EventArgs.GroupPokeArgs.GroupID">
+            <summary>
+            群号
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.EventArgs.GroupPokeArgs.#ctor(System.String,System.String,System.String,System.Int64,System.Int64,System.Int64)">
             <summary>
             初始化 <see cref="T:AuroraNavite.EventArgs.PokeEventArgs"/> 类的新实例
             </summary>
             <param name="PostType">上报类型</param>
             <param name="NoticeType">通知类型</param>
             <param name="SubType">提示类型</param>
+            <param name="GroupID">群号</param>
             <param name="UserID">发送者QQ号</param>
             <param name="TargetID">被戳者 QQ 号</param>
         </member>
@@ -1078,6 +1348,26 @@
             <summary>
             异常 类 -- 关于WebSocket异常
             </summary>
+        </member>
+        <member name="T:AuroraNavite.Utils">
+            <summary>
+            通用方法 类
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.Utils.GetEnumByDescription``1(System.String)">
+            <summary>
+            通过 枚举Description 转为枚举
+            </summary>
+            <typeparam name="T">枚举</typeparam>
+            <param name="description">需要转换的Description</param>
+            <returns>返回该枚举</returns>
+        </member>
+        <member name="M:AuroraNavite.Utils.GetChildTypeByPostType(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            通过上报类型返回子类型键名
+            </summary>
+            <param name="Json">接到的事件</param>
+            <returns>返回子类型的键名</returns>
         </member>
         <member name="T:AuroraNavite.WebSocket.Client">
             <summary>
