@@ -13,7 +13,7 @@ namespace AuroraNavite.WebSocket
     /// WebSocket 客户端 封装类
     /// <para>正向 WebSocket</para>
     /// </summary>
-    public class Client
+    public class Client : BaseWebSocket
     {
         #region --变量--
 
@@ -31,7 +31,6 @@ namespace AuroraNavite.WebSocket
         /// </summary>
         public Event EventHook;
 
-        private ClientWebSocket WebSocketClient;
         private JObject Json;
         private Task WaitFeedback;
         private static readonly Type[] AttributeTypes;

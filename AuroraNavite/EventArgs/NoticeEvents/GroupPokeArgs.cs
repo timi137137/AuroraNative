@@ -28,7 +28,8 @@ namespace AuroraNavite.EventArgs
         /// <param name="GroupID">群号</param>
         /// <param name="UserID">发送者QQ号</param>
         /// <param name="TargetID">被戳者 QQ 号</param>
-        public GroupPokeArgs(string PostType, string NoticeType, string SubType, long GroupID, long UserID, long TargetID) : base(0, 0, PostType, NoticeType, SubType, UserID, TargetID) {
+        public GroupPokeArgs(string PostType, string NoticeType, string SubType, long GroupID, long UserID, long TargetID) : base(0, 0, PostType, NoticeType, SubType, UserID, TargetID)
+        {
             this.GroupID = GroupID;
         }
 

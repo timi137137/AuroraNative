@@ -65,7 +65,7 @@ namespace AuroraNavite
             }
             return false;
         }
-        
+
         #endregion
     }
 

@@ -4,6 +4,17 @@
         <name>AuroraNavite</name>
     </assembly>
     <members>
+        <member name="T:AuroraNavite.Api">
+            <summary>
+            API 类
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.Api.#ctor(AuroraNavite.WebSocket.BaseWebSocket)">
+            <summary>
+            构建函数
+            </summary>
+            <param name="client">Client实例</param>
+        </member>
         <member name="T:AuroraNavite.BaseAttribute">
             <summary>
             特性的基类
