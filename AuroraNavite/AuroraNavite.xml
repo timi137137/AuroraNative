@@ -9,11 +9,60 @@
             API 类
             </summary>
         </member>
+        <member name="F:AuroraNavite.Api.TaskList">
+            <summary>
+            任务队列
+            </summary>
+        </member>
         <member name="M:AuroraNavite.Api.#ctor(AuroraNavite.WebSocket.BaseWebSocket)">
             <summary>
             构建函数
             </summary>
-            <param name="client">Client实例</param>
+            <param name="WebSocket">WebSocket句柄</param>
+        </member>
+        <member name="M:AuroraNavite.Api.SendPrivateMessage(System.Int64,System.String,System.Boolean)">
+            <summary>
+            发送私聊消息
+            </summary>
+            <param name="QID">接受者QQ号</param>
+            <param name="Message">信息内容</param>
+            <param name="AutoEscape">消息内容是否作为纯文本发送</param>
+            <returns>返回消息ID，错误返回-1</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.FeedbackMessageID(System.String)">
+            <summary>
+            返回消息ID的回调
+            </summary>
+            <param name="UniqueCode">API唯一识别码</param>
+            <returns>错误返回-1，成功返回信息ID</returns>
+        </member>
+        <member name="T:AuroraNavite.BaseAPI">
+            <summary>
+            API基础 抽象类
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.BaseAPI.Action">
+            <summary>
+            API节点
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.BaseAPI.Params">
+            <summary>
+            参数
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.BaseAPI.UniqueCode">
+            <summary>
+            唯一识别码
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.BaseAPI.#ctor(System.String,Newtonsoft.Json.Linq.JObject,System.String)">
+            <summary>
+            初始化 <see cref="T:AuroraNavite.BaseAPI"/> 类的新实例
+            </summary>
+            <param name="Action">API节点</param>
+            <param name="Params">参数</param>
+            <param name="UniqueCode">唯一识别码</param>
         </member>
         <member name="T:AuroraNavite.BaseAttribute">
             <summary>
@@ -1379,6 +1428,28 @@
             </summary>
             <param name="Json">接到的事件</param>
             <returns>返回子类型的键名</returns>
+        </member>
+        <member name="M:AuroraNavite.Utils.NowTimeSteamp">
+            <summary>
+            获取现在时间戳
+            </summary>
+            <returns>返回字符串</returns>
+        </member>
+        <member name="T:AuroraNavite.WebSocket.BaseWebSocket">
+            <summary>
+            WebSocket 基础类
+            </summary>
+        </member>
+        <member name="F:AuroraNavite.WebSocket.BaseWebSocket.WebSocket">
+            <summary>
+            Websocket句柄
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.WebSocket.BaseWebSocket.Send(AuroraNavite.BaseAPI)">
+            <summary>
+            发送数据到服务端/客户端
+            </summary>
+            <param name="Json">传输Json格式的文本</param>
         </member>
         <member name="T:AuroraNavite.WebSocket.Client">
             <summary>

@@ -32,7 +32,6 @@ namespace AuroraNavite.WebSocket
         public Event EventHook;
 
         private JObject Json;
-        private Task WaitFeedback;
         private static readonly Type[] AttributeTypes;
 
         #endregion
@@ -45,12 +44,12 @@ namespace AuroraNavite.WebSocket
         /// <returns>连接成功返回true，反而异之</returns>
         public bool Create()
         {
-            WebSocketClient = new ClientWebSocket();
-            Task Connect = WebSocketClient.ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
+            WebSocket = new ClientWebSocket();
+            Task Connect = WebSocket.ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
             Connect.Wait();
-            if (WebSocketClient.State == WebSocketState.Open)
+            if (WebSocket.State == WebSocketState.Open)
             {
-                WaitFeedback = Task.Run(Feedback);
+                Task.Run(Feedback);
                 return true;
             }
             else
@@ -64,8 +63,8 @@ namespace AuroraNavite.WebSocket
         /// </summary>
         public void Dispose()
         {
-            WebSocketClient.Dispose();
-            WebSocketClient.Abort();
+            WebSocket.Dispose();
+            WebSocket.Abort();
         }
 
         #endregion
@@ -86,12 +85,12 @@ namespace AuroraNavite.WebSocket
             while (true)
             {
                 ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[5120]);
-                WebSocketReceiveResult Result = await WebSocketClient.ReceiveAsync(BytesReceived, CancellationToken.None);
+                WebSocketReceiveResult Result = await WebSocket.ReceiveAsync(BytesReceived, CancellationToken.None);
                 Json = JObject.Parse(Encoding.UTF8.GetString(BytesReceived.Array, 0, Result.Count));
 
                 if (Json.TryGetValue("echo", out JToken Token))
                 {
-                    //TODO API
+                    Api.TaskList[Json["echo"].ToString()] = Json;
                 }
                 else
                 {
