@@ -62,7 +62,7 @@ namespace AuroraNavite
         /// <returns>返回字符串</returns>
         public static string NowTimeSteamp()
         {
-            return ((DateTime.Now.Ticks - TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0), TimeZoneInfo.Local).Ticks) / 10000).ToString();
+            return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
         }
     }
 }
