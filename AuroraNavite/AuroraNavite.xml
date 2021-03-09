@@ -14,7 +14,7 @@
             任务队列
             </summary>
         </member>
-        <member name="M:AuroraNavite.Api.#ctor(AuroraNavite.WebSocket.BaseWebSocket)">
+        <member name="M:AuroraNavite.Api.#ctor(AuroraNavite.WebSockets.BaseWebSocket)">
             <summary>
             构建函数
             </summary>
@@ -384,6 +384,32 @@
             <param name="MessageSeq">起始消息序号</param>
             <param name="GroupID">群号</param>
             <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.SetEssenceMsg(System.String)">
+            <summary>
+            设置精华消息
+            </summary>
+            <param name="MessageID">消息ID</param>
+        </member>
+        <member name="M:AuroraNavite.Api.DelEssenceMsg(System.String)">
+            <summary>
+            移除精华消息
+            </summary>
+            <param name="MessageID">消息ID</param>
+        </member>
+        <member name="M:AuroraNavite.Api.GetEssenceMsgList(System.Int64)">
+            <summary>
+            获取精华消息列表
+            </summary>
+            <param name="GroupID">群号</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.CheckURLSafely(System.String)">
+            <summary>
+            检查链接安全性
+            </summary>
+            <param name="URL">需要检测的链接</param>
+            <returns>错误返回null,成功返回int</returns>
         </member>
         <member name="T:AuroraNavite.BaseAPI">
             <summary>
@@ -1784,53 +1810,68 @@
             </summary>
             <returns>返回字符串</returns>
         </member>
-        <member name="T:AuroraNavite.WebSocket.BaseWebSocket">
+        <member name="T:AuroraNavite.WebSockets.BaseWebSocket">
             <summary>
             WebSocket 基础类
             </summary>
         </member>
-        <member name="F:AuroraNavite.WebSocket.BaseWebSocket.WebSocket">
+        <member name="F:AuroraNavite.WebSockets.BaseWebSocket.WebSocket">
             <summary>
             Websocket句柄
             </summary>
         </member>
-        <member name="M:AuroraNavite.WebSocket.BaseWebSocket.Send(AuroraNavite.BaseAPI)">
+        <member name="F:AuroraNavite.WebSockets.BaseWebSocket.EventHook">
+            <summary>
+            事件钩子
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.WebSockets.BaseWebSocket.Send(AuroraNavite.BaseAPI)">
             <summary>
             发送数据到服务端/客户端
             </summary>
             <param name="Json">传输Json格式的文本</param>
         </member>
-        <member name="T:AuroraNavite.WebSocket.Client">
+        <member name="T:AuroraNavite.WebSockets.Client">
             <summary>
             WebSocket 客户端 封装类
             <para>正向 WebSocket</para>
             </summary>
         </member>
-        <member name="P:AuroraNavite.WebSocket.Client.host">
+        <member name="P:AuroraNavite.WebSockets.Client.host">
             <summary>
             WebSocket服务端地址<para>请记得带端口号</para>
             </summary>
         </member>
-        <member name="F:AuroraNavite.WebSocket.Client.EventHook">
-            <summary>
-            事件钩子
-            </summary>
-        </member>
-        <member name="M:AuroraNavite.WebSocket.Client.Create">
+        <member name="M:AuroraNavite.WebSockets.Client.Create">
             <summary>
             创建并连接到WebSocket服务器
             </summary>
             <returns>连接成功返回true，反而异之</returns>
         </member>
-        <member name="M:AuroraNavite.WebSocket.Client.Dispose">
+        <member name="M:AuroraNavite.WebSockets.Client.Dispose">
             <summary>
             立刻中断并释放连接<para>注意！断开后需要重新Create</para>
             </summary>
         </member>
-        <member name="T:AuroraNavite.WebSocket.Server">
+        <member name="T:AuroraNavite.WebSockets.Server">
             <summary>
             WebSocket 服务器 封装类
             <para>反向WebSocket</para>
+            </summary>
+        </member>
+        <member name="P:AuroraNavite.WebSockets.Server.port">
+            <summary>
+            WebSocket监听端口
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.WebSockets.Server.Create">
+            <summary>
+            创建WebSocket服务器并监听端口
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.WebSockets.Server.Dispose">
+            <summary>
+            立刻中断并释放连接<para>注意！断开后需要重新Create</para>
             </summary>
         </member>
     </members>

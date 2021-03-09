@@ -1,5 +1,5 @@
 ﻿using AuroraNavite.EventArgs;
-using AuroraNavite.WebSocket;
+using AuroraNavite.WebSockets;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
