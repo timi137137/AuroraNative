@@ -100,6 +100,291 @@
             <param name="QID">QQ号</param>
             <param name="Duration">禁言时间，单位秒<para>默认:30分钟(1800秒)</para></param>
         </member>
+        <member name="M:AuroraNavite.Api.SetGroupAnonymousBan(System.Int64,System.Int32,System.String,AuroraNavite.EventArgs.Anonymous)">
+            <summary>
+            群组匿名用户禁言
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="Duration">禁言时间，单位秒。注意无法解除匿名用户禁言！<para>默认:30分钟(1800秒)</para></param>
+            <param name="AnonymousFlag">匿名用户的Flag</param>
+            <param name="Anonymous">群消息事件中完整的 anonymous </param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupWholeBan(System.Int64,System.Boolean)">
+            <summary>
+            群组全员禁言
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="Enable">是否禁言<para>默认:true</para></param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupAdmin(System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            设置群管理员
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="QID">QQ号</param>
+            <param name="Enable">是否设置为管理员<para>默认:true</para></param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupCard(System.Int64,System.Int64,System.String)">
+            <summary>
+            设置群名片
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="QID">QQ号</param>
+            <param name="Card">群名片内容<para>默认:null（删除群名片）</para></param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupName(System.Int64,System.String)">
+            <summary>
+            设置群名
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="GroupName">新群名</param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupLeave(System.Int64,System.Boolean)">
+            <summary>
+            退出群组
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="IsDismiss">是否解散</param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupSpecialTitle(System.Int64,System.Int64,System.String,System.Int32)">
+            <summary>
+            设置群组专属头衔
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="QID">QQ号</param>
+            <param name="SpecialTitle">群名片内容<para>默认:null（删除群名片）</para></param>
+            <param name="Duration">专属头衔有效期, 单位秒, 不过此项似乎没有效果, 可能是只有某些特殊的时间长度有效, 有待测试<para>默认:-1(永久)</para></param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetFriendAddRequest(System.String,System.Boolean,System.String)">
+            <summary>
+            处理加好友请求
+            </summary>
+            <param name="Flag">加好友请求事件的Flag</param>
+            <param name="Approve">是否同意请求<para>默认:true</para></param>
+            <param name="Remark">添加好友后的备注（仅在同意时有效)</param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupAddRequest(System.String,System.String,System.Boolean,System.String)">
+            <summary>
+            处理加群请求/邀请
+            </summary>
+            <param name="Flag">加群请求事件的Flag</param>
+            <param name="SubType">子类型，需与加群请求事件上的 sub_type 一致</param>
+            <param name="Approve">是否同意请求/邀请<para>默认:true</para></param>
+            <param name="Reason">拒绝理由（仅在拒绝时有效)</param>
+        </member>
+        <member name="M:AuroraNavite.Api.GetLoginInfo">
+            <summary>
+            获取登录号信息
+            </summary>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetStrangerInfo(System.Int64,System.Boolean)">
+            <summary>
+            获取陌生人信息
+            </summary>
+            <param name="QID">QQ号</param>
+            <param name="Cache">是否使用缓存，使用缓存响应快但是可能更新不及时<para>默认:false</para></param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetFriendList">
+            <summary>
+            获取好友列表
+            </summary>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupInfo(System.Int64,System.Boolean)">
+            <summary>
+            获取群信息
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="Cache">是否使用缓存，使用缓存响应快但是可能更新不及时<para>默认:false</para></param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupList">
+            <summary>
+            获取群列表
+            </summary>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupMemberInfo(System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            获取群成员信息
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="QID">QQ号</param>
+            <param name="Cache">是否使用缓存，使用缓存响应快但是可能更新不及时<para>默认:false</para></param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupMemberList(System.Int64)">
+            <summary>
+            获取群成员列表
+            </summary>
+            <param name="GroupID">群号</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupHonorInfo(System.Int64,System.String)">
+            <summary>
+            获取群荣耀信息
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="Type">要获取的群荣誉类型<para>talkative/performer/legend/strong_newbie/emotion/all</para></param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.CanSendImage">
+            <summary>
+            检查是否可以发送图片
+            </summary>
+            <returns>错误返回false</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.CanSendRecord">
+            <summary>
+            检查是否可以发送语音
+            </summary>
+            <returns>错误返回false</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetVersionInfo">
+            <summary>
+            获取版本信息
+            </summary>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.SetRestart(System.Int32)">
+            <summary>
+            重启 go-cqhttp (谨慎使用！)
+            </summary>
+            <param name="Delay">延迟重启时间，单位毫秒<para>默认:0 (立刻重启)</para></param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupPortrait(System.Int64,System.String,System.Int32)">
+            <summary>
+            设置群头像
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="File">图片</param>
+            <param name="Cache">是否使用已缓存的文件<para>默认:1(使用)</para></param>
+        </member>
+        <member name="M:AuroraNavite.Api.GetWordSlices(System.String)">
+            <summary>
+            获取中文分词(谨慎使用!)
+            </summary>
+            <param name="Content">内容</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.OCRImage(System.String)">
+            <summary>
+            图片OCR
+            </summary>
+            <param name="Image">图片ID</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupSystemMsg">
+            <summary>
+            获取群系统消息
+            </summary>
+            <returns>错误或不存在任何消息返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.UploadGroupFile(System.Int64,System.String,System.String,System.String)">
+            <summary>
+            上传本地文件到群文件
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="FilePath">本地文件路径</param>
+            <param name="SaveName">群文件保存的文件名称</param>
+            <param name="Folder">上传到群文件的父目录ID<para>默认:null (保存到根目录下)</para></param>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupFileSystemInfo(System.Int64)">
+            <summary>
+            获取群文件系统信息
+            </summary>
+            <param name="GroupID">群号</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupRootFiles(System.Int64)">
+            <summary>
+            获取群根目录文件列表
+            </summary>
+            <param name="GroupID">群号</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupFilesByFolder(System.Int64,System.String)">
+            <summary>
+            获取群子目录文件列表
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="FolderID">文件夹ID</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupFilesURL(System.Int64,System.String,System.Int32)">
+            <summary>
+            获取群文件资源链接
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="FileID">文件ID</param>
+            <param name="BusID">文件类型</param>
+            <returns>错误返回null,成功返回下载链接</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetStatus">
+            <summary>
+            获取状态
+            </summary>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupAtAllRemain(System.Int64)">
+            <summary>
+            获取群 @全体成员 剩余次数
+            </summary>
+            <param name="GroupID">群号</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.HandleQuickOperation(System.Object,System.Object)">
+            <summary>
+            对事件执行快速操作 (隐藏 API )
+            </summary>
+            <param name="Context">事件数据对象</param>
+            <param name="Operation">快速操作对象</param>
+        </member>
+        <member name="M:AuroraNavite.Api.GetVIPInfo(System.Int64)">
+            <summary>
+            获取VIP信息
+            </summary>
+            <param name="QID">QQ号</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.SendGroupNotice(System.Int64,System.String)">
+            <summary>
+            发送群公告
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="Content">公告内容</param>
+        </member>
+        <member name="M:AuroraNavite.Api.ReloadEventFilter">
+            <summary>
+            重载事件过滤器
+            </summary>
+        </member>
+        <member name="M:AuroraNavite.Api.DownloadFile(System.String,System.Int32,System.String[])">
+            <summary>
+            下载文件到缓存目录
+            </summary>
+            <param name="URL">下载链接</param>
+            <param name="ThreadCount">线程数</param>
+            <param name="Headers">自定义请求头</param>
+            <returns>错误返回null,成功返回本地绝对路径</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetOnlineClients(System.Boolean)">
+            <summary>
+            获取当前账号在线客户端列表
+            </summary>
+            <param name="Cache">是否无视缓存</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetGroupMsgHistory(System.Int64,System.Int64)">
+            <summary>
+            获取群消息历史记录
+            </summary>
+            <param name="MessageSeq">起始消息序号</param>
+            <param name="GroupID">群号</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
         <member name="T:AuroraNavite.BaseAPI">
             <summary>
             API基础 抽象类
