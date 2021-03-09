@@ -26,15 +26,79 @@
             </summary>
             <param name="QID">接受者QQ号</param>
             <param name="Message">信息内容</param>
-            <param name="AutoEscape">消息内容是否作为纯文本发送</param>
+            <param name="AutoEscape">是否转义<para>默认：false</para></param>
             <returns>返回消息ID，错误返回-1</returns>
         </member>
-        <member name="M:AuroraNavite.Api.FeedbackMessageID(System.String)">
+        <member name="M:AuroraNavite.Api.SendGroupMessage(System.Int64,System.String,System.Boolean)">
             <summary>
-            返回消息ID的回调
+            发送群聊消息
             </summary>
-            <param name="UniqueCode">API唯一识别码</param>
+            <param name="GroupID">群号</param>
+            <param name="Message">信息内容</param>
+            <param name="AutoEscape">是否转义<para>默认：false</para></param>
+            <returns>返回消息ID，错误返回-1</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.SendGroupForwardMessage(System.Int64,Newtonsoft.Json.Linq.JArray)">
+            <summary>
+            转发合并消息 - 群
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="Message">信息内容</param>
+            <returns>返回消息ID，错误返回-1</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.SendMsg(System.String,System.String,System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            发送消息
+            </summary>
+            <param name="Message">信息内容</param>
+            <param name="MessageType">信息类型<para>私聊：private</para><para>群聊：group</para></param>
+            <param name="QID">QQ号</param>
+            <param name="GroupID">群号</param>
+            <param name="AutoEscape">是否转义<para>默认：false</para></param>
             <returns>错误返回-1，成功返回信息ID</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.DeleteMessage(System.Int32)">
+            <summary>
+            撤回消息
+            </summary>
+            <param name="MessageID">消息ID</param>
+        </member>
+        <member name="M:AuroraNavite.Api.GetMsg(System.String)">
+            <summary>
+            获取消息
+            </summary>
+            <param name="MessageID">消息ID</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetForwardMsg(System.String)">
+            <summary>
+            获取合并转发内容
+            </summary>
+            <param name="MessageID">消息ID</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.GetImage(System.String)">
+            <summary>
+            获取图片信息
+            </summary>
+            <param name="Filename">图片缓存文件名,带不带后缀你喜欢就好</param>
+            <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupKick(System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            群组踢人
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="QID">QQ号</param>
+            <param name="RejectAddRequest">是否自动拒绝此人加群申请<para>默认:false</para></param>
+        </member>
+        <member name="M:AuroraNavite.Api.SetGroupBan(System.Int64,System.Int64,System.Int32)">
+            <summary>
+            群组单人禁言
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="QID">QQ号</param>
+            <param name="Duration">禁言时间，单位秒<para>默认:30分钟(1800秒)</para></param>
         </member>
         <member name="T:AuroraNavite.BaseAPI">
             <summary>
