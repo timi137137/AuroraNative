@@ -1,14 +1,14 @@
 <p align="center">
     <img src="Icon.png" width="200" height="200" alt="go-cqhttp">
 </p>
-
 <div align="center">
-    <h1 align="center">AuroraNavite</h2>
+    <h1 align="center">AuroraNative</h2>
     <h3 align="center"><b>基于 <a href="https://github.com/Mrs4s/go-cqhttp">go-cqhttp</a> 以及 <a href="https://github.com/howmanybots/onebot/blob/master/README.md">OneBot</a> 的 C# 机器人开发框架 </b></h3>
 
+
 <h4 align="center">
-<a href="https://www.nuget.org/packages/AuroraNavite/">
-    <img src="https://img.shields.io/nuget/vpre/AuroraNavite?style=flat-square">
+<a href="https://www.nuget.org/packages/AuroraNative/">
+    <img src="https://img.shields.io/nuget/vpre/AuroraNative?style=flat-square">
 </a>
 <a href="https://github.com/howmanybots/onebot">
     <img src="https://img.shields.io/badge/OneBot-v11-blue?style=flat-square">
@@ -16,8 +16,8 @@
 <a href="https://github.com/Mrs4s/go-cqhttp/releases">
     <img src="https://img.shields.io/badge/go--cqhttp-v0.9.40--fix4-blueviolet?style=flat-square">
 </a>
-<img src="https://img.shields.io/github/license/timi137137/AuroraNavite?style=flat-square">
-<img src="https://img.shields.io/github/workflow/status/timi137137/AuroraNavite/buildpackages/master?style=flat-square">
+<img src="https://img.shields.io/github/license/timi137137/AuroraNative?style=flat-square">
+<img src="https://img.shields.io/github/workflow/status/timi137137/AuroraNative/buildpackages/master?style=flat-square">
 </h4>
 </div>
 
