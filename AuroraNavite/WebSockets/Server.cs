@@ -1,10 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,7 +42,8 @@ namespace AuroraNavite.WebSockets
             Listener.Prefixes.Add("http://*:" + Port + "/");
             Listener.Start();
             Task.Run(Feedback);
-            while (!IsConnect) {
+            while (!IsConnect)
+            {
                 Thread.Sleep(100);
             }
         }

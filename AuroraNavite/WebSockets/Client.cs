@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,17 +36,16 @@ namespace AuroraNavite.WebSockets
         public bool Create()
         {
             WebSocket = new ClientWebSocket();
-            Task Connect = ((ClientWebSocket)WebSocket).ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
-            Connect.Wait();
-            if (WebSocket.State == WebSocketState.Open)
-            {
-                Task.Run(Feedback);
-                return true;
+            if (WebSocket is ClientWebSocket socket) {
+                Task Connect = socket.ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
+                Connect.Wait();
+                if (WebSocket.State == WebSocketState.Open)
+                {
+                    Task.Run(Feedback);
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         /// <summary>

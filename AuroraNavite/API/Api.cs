@@ -834,16 +834,8 @@ namespace AuroraNavite
 
         private static string FeedbackMessageID(string UniqueCode)
         {
-            JObject FBJson = new JObject();
-            while (FBJson["status"] == null)
-            {
-                if (TaskList[UniqueCode].ToString() != "Sended")
-                {
-                    FBJson = JObject.Parse(TaskList[UniqueCode].ToString());
-                    TaskList.Remove(UniqueCode);
-                }
-                Thread.Sleep(10);
-            }
+            JObject FBJson = GetFeedback(UniqueCode);
+
             //判断返回
             if (FBJson["status"].ToString() == "ok")
             {
@@ -854,16 +846,8 @@ namespace AuroraNavite
 
         private static JObject FeedbackObject(string UniqueCode)
         {
-            JObject FBJson = new JObject();
-            while (FBJson["status"] == null)
-            {
-                if (TaskList[UniqueCode].ToString() != "Sended")
-                {
-                    FBJson = JObject.Parse(TaskList[UniqueCode].ToString());
-                    TaskList.Remove(UniqueCode);
-                }
-                Thread.Sleep(10);
-            }
+            JObject FBJson = GetFeedback(UniqueCode);
+
             //判断返回
             if (FBJson["status"].ToString() == "ok")
             {
@@ -872,6 +856,21 @@ namespace AuroraNavite
             return null;
         }
 
+        private static JObject GetFeedback(string UniqueCode) {
+            JObject FBJson = new JObject();
+
+            do
+            {
+                if (TaskList[UniqueCode].ToString() != "Sended")
+                {
+                    FBJson = JObject.Parse(TaskList[UniqueCode].ToString());
+                    TaskList.Remove(UniqueCode);
+                    break;
+                }
+                Thread.Sleep(10);
+            }while (FBJson["status"] == null);
+            return FBJson;
+        }
         #endregion
     }
 }

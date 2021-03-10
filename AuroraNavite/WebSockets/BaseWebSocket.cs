@@ -42,7 +42,8 @@ namespace AuroraNavite.WebSockets
             WebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(Json, Formatting.None))), WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
-        internal async Task GetEventAsync() {
+        internal async Task GetEventAsync()
+        {
             ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[5120]);
             WebSocketReceiveResult Result = await WebSocket.ReceiveAsync(BytesReceived, CancellationToken.None);
             Json = JObject.Parse(Encoding.UTF8.GetString(BytesReceived.Array, 0, Result.Count));
@@ -70,7 +71,7 @@ namespace AuroraNavite.WebSockets
                                 if (Parameter != null)
                                 {
                                     Method.Invoke(EventHook, new object[] { Json.ToObject(Parameter.ParameterType) });
-                                    break;
+                                    return;
                                 }
                             }
                         }
