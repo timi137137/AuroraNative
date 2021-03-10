@@ -10,8 +10,8 @@
     <RepositoryType>git repo</RepositoryType>
     <PackageTags>SDK AuroraNative Navite mikuhl go-cqhttp</PackageTags>
     <Copyright>悠静萝莉 Copyright©2021</Copyright>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>个人签名密码默认a.pfx</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>悠静萝莉的签名.pfx</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AssemblyVersion>0.0.1.0227</AssemblyVersion>
@@ -20,6 +20,7 @@
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <AssemblyName>AuroraNative</AssemblyName>
     <RootNamespace>AuroraNative</RootNamespace>
+    <Version>0.1.0-alpha</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
