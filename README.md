@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/badge/go--cqhttp-v0.9.40--fix4-blueviolet?style=flat-square">
 </a>
 <img src="https://img.shields.io/github/license/timi137137/AuroraNative?style=flat-square">
-<img src="https://img.shields.io/github/workflow/status/timi137137/AuroraNative/buildpackages/master?style=flat-square">
+<img src="https://img.shields.io/github/workflow/status/timi137137/AuroraNative/BuildPackages/master?style=flat-square">
 </h4>
 </div>
 
