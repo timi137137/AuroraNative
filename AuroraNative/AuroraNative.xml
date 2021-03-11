@@ -1846,7 +1846,6 @@
             <summary>
             创建并连接到WebSocket服务器
             </summary>
-            <returns>连接成功返回true，反而异之</returns>
         </member>
         <member name="M:AuroraNative.WebSockets.Client.Dispose">
             <summary>

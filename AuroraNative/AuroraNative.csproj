@@ -1,24 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net5.0;</TargetFrameworks>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Authors>悠静萝莉,Monodesu</Authors>
-    <Description>This donet SDK based on go-cqhttp</Description>
+    <Authors>悠静萝莉;Monodesu</Authors>
+    <Description>This donet SDK based on go-cqhttp
+
+基于 go-cqhttp 与 OneBot 标准所实现的一个 C# 开发框架，并且本框架可以支持.NET 5/.NET Framework 4.6.1以上使用，使用.NET 5可以快捷开发一个跨平台的机器人。</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/timi137137/AuroraNative</RepositoryUrl>
     <RepositoryType>git repo</RepositoryType>
-    <PackageTags>SDK AuroraNative Navite mikuhl go-cqhttp</PackageTags>
+    <PackageTags>SDK AuroraNative Navite  mikuhl go-cqhttp</PackageTags>
     <Copyright>悠静萝莉 Copyright©2021</Copyright>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AssemblyVersion>0.0.1.0227</AssemblyVersion>
-    <FileVersion>0.0.1.0227</FileVersion>
+    <AssemblyVersion>0.1.0.0311</AssemblyVersion>
+    <FileVersion>0.1.0.0311</FileVersion>
     <PackageIcon>Icon.png</PackageIcon>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <AssemblyName>AuroraNative</AssemblyName>
     <RootNamespace>AuroraNative</RootNamespace>
+    <Version>0.1.0-alpha</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -37,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.*" />
   </ItemGroup>
 
 </Project>

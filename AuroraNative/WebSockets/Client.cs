@@ -41,19 +41,15 @@ namespace AuroraNative.WebSockets
         /// <summary>
         /// 创建并连接到WebSocket服务器
         /// </summary>
-        /// <returns>连接成功返回true，反而异之</returns>
-        public bool Create()
+        public void Create()
         {
-            if (WebSocket is ClientWebSocket socket) {
-                Task Connect = socket.ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
-                Connect.Wait();
-                if (WebSocket.State == WebSocketState.Open)
-                {
-                    Task.Run(Feedback);
-                    return true;
-                }
+            WebSocket = new ClientWebSocket();
+            Task Connect = ((ClientWebSocket)WebSocket).ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
+            Connect.Wait();
+            if (WebSocket.State == WebSocketState.Open)
+            {
+                Task.Run(Feedback);
             }
-            return false;
         }
 
         /// <summary>
