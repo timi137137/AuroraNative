@@ -38,6 +38,12 @@ namespace AuroraNative.WebSockets
             AttributeTypes = Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsAbstract == false && p.IsInterface == false && typeof(Attribute).IsAssignableFrom(p)).ToArray();
         }
 
+        /// <summary>
+        /// 创建一个 <see cref="Server"/> 实例
+        /// </summary>
+        /// <param name="Event">重写后的事件类实例</param>
+        public Server(Event Event) => EventHook = Event;
+
         #endregion
 
         #region --公开函数--
@@ -47,13 +53,22 @@ namespace AuroraNative.WebSockets
         /// </summary>
         public void Create()
         {
-            Listener = new HttpListener();
-            Listener.Prefixes.Add("http://*:" + Port + "/");
-            Listener.Start();
-            Task.Run(Feedback);
-            while (!IsConnect)
+            try
             {
-                Thread.Sleep(100);
+                Logger.Debug("反向WebSocket已创建，准备监听...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                Listener = new HttpListener();
+                Listener.Prefixes.Add("http://*:" + Port + "/");
+                Listener.Start();
+                Logger.Info("开始监听来自 go-cqhttp 客户端的连接...");
+                Task.Run(Feedback);
+                while (!IsConnect) {
+                    Thread.Sleep(100);
+                }
+            }
+            catch(HttpListenerException) {
+                Logger.Error("无法启动监听服务器，请确保使用管理员权限运行。否则无法监听！", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                Console.ReadKey();
+                Environment.Exit(0);
             }
         }
 
@@ -62,9 +77,16 @@ namespace AuroraNative.WebSockets
         /// </summary>
         public void Dispose()
         {
-            Listener.Stop();
-            WebSocket.Dispose();
-            WebSocket.Abort();
+            Logger.Debug($"准备销毁反向WebSocket...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            try {
+                Listener.Stop();
+                WebSocket.Dispose();
+                WebSocket.Abort();
+                Api.Destroy();
+                Logger.Info("已销毁反向WebSocket");
+            } catch (Exception e) {
+                Logger.Error("销毁反向WebSocket失败！\n" + e.Message, $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            }
         }
 
         #endregion
@@ -78,9 +100,11 @@ namespace AuroraNative.WebSockets
                 HttpListenerContext Context = await Listener.GetContextAsync();
                 if (Context.Request.IsWebSocketRequest)
                 {
+                    Logger.Info("收到来自 go-cqhttp 客户端的连接！连接已建立！");
                     HttpListenerWebSocketContext SocketContext = await Context.AcceptWebSocketAsync(null);
                     WebSocket = SocketContext.WebSocket;
                     IsConnect = true;
+                    Api.Create(this);
                     while (WebSocket.State == WebSocketState.Open)
                     {
                         await GetEventAsync();

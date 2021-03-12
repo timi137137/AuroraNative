@@ -34,6 +34,12 @@ namespace AuroraNative.WebSockets
             AttributeTypes = Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsAbstract == false && p.IsInterface == false && typeof(Attribute).IsAssignableFrom(p)).ToArray();
         }
 
+        /// <summary>
+        /// 创建一个 <see cref="Client"/> 实例
+        /// </summary>
+        /// <param name="Event">重写后的事件类实例</param>
+        public Client(Event Event) => EventHook = Event;
+
         #endregion
 
         #region --公开函数--
@@ -43,16 +49,32 @@ namespace AuroraNative.WebSockets
         /// </summary>
         public bool Create()
         {
-            WebSocket = new ClientWebSocket();
-            if (WebSocket is ClientWebSocket socket) {
-                Task Connect = socket.ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
-                Connect.Wait();
-                if (WebSocket.State == WebSocketState.Open)
+            Logger.Debug("正向WebSocket已创建，准备连接...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            for (int i = 1;i < 4;i++) {
+                try
                 {
-                    Task.Run(Feedback);
-                    return true;
+                    WebSocket = new ClientWebSocket();
+                    if (WebSocket is ClientWebSocket socket)
+                    {
+                        Logger.Debug($"准备连接至IP:{Host}", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                        Task Connect = socket.ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
+                        Connect.Wait();
+                        if (WebSocket.State == WebSocketState.Open)
+                        {
+                            Logger.Info("已连接至 go-cqhttp 服务器！");
+                            Task.Run(Feedback);
+                            Api.Create(this);
+                            return true;
+                        }
+                    }
+                }
+                catch (AggregateException)
+                {
+                    Logger.Warning($"连接到 go-cqhttp 服务器失败！五秒后重试(重试次数:{i})...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                    Thread.Sleep(5000);
                 }
             }
+            Logger.Error("连接到 go-cqhttp 服务器失败！请检查IP是否正确(需要携带端口号)或确认服务器是否启动和初始化完毕！", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
             return false;
         }
 
@@ -61,8 +83,17 @@ namespace AuroraNative.WebSockets
         /// </summary>
         public void Dispose()
         {
-            WebSocket.Dispose();
-            WebSocket.Abort();
+            Logger.Debug($"准备销毁正向WebSocket...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            try
+            {
+                WebSocket.Dispose();
+                WebSocket.Abort();
+                Api.Destroy();
+                Logger.Info("已销毁正向WebSocket");
+            }
+            catch(Exception e) {
+                Logger.Error("销毁正向WebSocket失败！\n" + e.Message, $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            }
         }
 
         #endregion

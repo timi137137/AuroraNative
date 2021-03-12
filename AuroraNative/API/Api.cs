@@ -1,7 +1,9 @@
 ﻿using AuroraNative.EventArgs;
 using AuroraNative.WebSockets;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +12,7 @@ namespace AuroraNative
     /// <summary>
     /// API 类
     /// </summary>
-    public class Api
+    public sealed class Api
     {
         #region --变量--
 
@@ -18,8 +20,18 @@ namespace AuroraNative
         /// 任务队列
         /// </summary>
         internal static JObject TaskList = new JObject();
+        internal static MemoryCache Cache = new MemoryCache(new MemoryCacheOptions());
 
         private readonly BaseWebSocket WebSocket;
+
+        #endregion
+
+        #region --属性--
+
+        /// <summary>
+        /// 获取API实例
+        /// </summary>
+        public static Api CurrentApi => (Api)Cache.Get($"API{AppDomain.CurrentDomain.Id}");
 
         #endregion
 
@@ -29,7 +41,7 @@ namespace AuroraNative
         /// 构建函数
         /// </summary>
         /// <param name="WebSocket">WebSocket句柄</param>
-        public Api(BaseWebSocket WebSocket)
+        private Api(BaseWebSocket WebSocket)
         {
             this.WebSocket = WebSocket;
         }
@@ -856,7 +868,8 @@ namespace AuroraNative
             return null;
         }
 
-        private static JObject GetFeedback(string UniqueCode) {
+        private static JObject GetFeedback(string UniqueCode)
+        {
             JObject FBJson = new JObject();
 
             do
@@ -868,9 +881,22 @@ namespace AuroraNative
                     break;
                 }
                 Thread.Sleep(10);
-            }while (FBJson["status"] == null);
+            } while (FBJson["status"] == null);
             return FBJson;
         }
+
+        internal static Api Create(BaseWebSocket WebSocket)
+        {
+            Api api = new Api(WebSocket);
+            Cache.Set($"API{AppDomain.CurrentDomain.Id}", api);
+            return api;
+        }
+
+        internal static void Destroy()
+        {
+            Cache.Remove($"API{AppDomain.CurrentDomain.Id}");
+        }
+
         #endregion
     }
 }

@@ -17,15 +17,8 @@ namespace AuroraNative.WebSockets
     {
         #region --变量--
 
-        /// <summary>
-        /// Websocket句柄
-        /// </summary>
         internal WebSocket WebSocket;
-        /// <summary>
-        /// 事件钩子
-        /// </summary>
-        public Event EventHook;
-
+        internal Event EventHook;
         internal JObject Json;
         internal static Type[] AttributeTypes;
 

@@ -14,6 +14,11 @@
             任务队列
             </summary>
         </member>
+        <member name="P:AuroraNative.Api.CurrentApi">
+            <summary>
+            获取API实例
+            </summary>
+        </member>
         <member name="M:AuroraNative.Api.#ctor(AuroraNative.WebSockets.BaseWebSocket)">
             <summary>
             构建函数
@@ -1784,6 +1789,69 @@
             异常 类 -- 关于WebSocket异常
             </summary>
         </member>
+        <member name="T:AuroraNative.Logger">
+            <summary>
+            彩色日志输出类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Logger.LogLevel">
+            <summary>
+            日志级别设定<para>默认 Info</para>
+            </summary>
+        </member>
+        <member name="M:AuroraNative.Logger.Debug(System.String,System.String)">
+            <summary>
+            输出一个等级为 调试 的信息
+            </summary>
+            <param name="Message">要输出的信息</param>
+            <param name="MethodName">输出的方法名，可选传入</param>
+        </member>
+        <member name="M:AuroraNative.Logger.Info(System.String,System.String)">
+            <summary>
+            输出一个等级为 信息 的信息
+            </summary>
+            <param name="Message">要输出的信息</param>
+            <param name="MethodName">输出的方法名，可选传入</param>
+        </member>
+        <member name="M:AuroraNative.Logger.Warning(System.String,System.String)">
+            <summary>
+            输出一个等级为 警告 的信息
+            </summary>
+            <param name="Message">要输出的信息</param>
+            <param name="MethodName">输出的方法名，可选传入</param>
+        </member>
+        <member name="M:AuroraNative.Logger.Error(System.String,System.String)">
+            <summary>
+            输出一个等级为 错误 的信息
+            </summary>
+            <param name="Message">要输出的信息</param>
+            <param name="MethodName">输出的方法名，可选传入</param>
+        </member>
+        <member name="T:AuroraNative.LogLevel">
+            <summary>
+            表示日志信息等级的枚举
+            </summary>
+        </member>
+        <member name="F:AuroraNative.LogLevel.Debug">
+            <summary>
+            表示输出日志的等级是 "调试" 级别
+            </summary>
+        </member>
+        <member name="F:AuroraNative.LogLevel.Info">
+            <summary>
+            表示输出日志的等级是 "信息" 级别
+            </summary>
+        </member>
+        <member name="F:AuroraNative.LogLevel.Warning">
+            <summary>
+            表示输出日志的等级是 "警告" 级别
+            </summary>
+        </member>
+        <member name="F:AuroraNative.LogLevel.Error">
+            <summary>
+            表示输出日志的等级是 "错误" 级别
+            </summary>
+        </member>
         <member name="T:AuroraNative.Utils">
             <summary>
             通用方法 类
@@ -1815,16 +1883,6 @@
             WebSocket 基础类
             </summary>
         </member>
-        <member name="F:AuroraNative.WebSockets.BaseWebSocket.WebSocket">
-            <summary>
-            Websocket句柄
-            </summary>
-        </member>
-        <member name="F:AuroraNative.WebSockets.BaseWebSocket.EventHook">
-            <summary>
-            事件钩子
-            </summary>
-        </member>
         <member name="M:AuroraNative.WebSockets.BaseWebSocket.Send(AuroraNative.BaseAPI)">
             <summary>
             发送数据到服务端/客户端
@@ -1841,6 +1899,12 @@
             <summary>
             WebSocket服务端地址<para>请记得带端口号</para>
             </summary>
+        </member>
+        <member name="M:AuroraNative.WebSockets.Client.#ctor(AuroraNative.Event)">
+            <summary>
+            创建一个 <see cref="T:AuroraNative.WebSockets.Client"/> 实例
+            </summary>
+            <param name="Event">重写后的事件类实例</param>
         </member>
         <member name="M:AuroraNative.WebSockets.Client.Create">
             <summary>
@@ -1862,6 +1926,12 @@
             <summary>
             WebSocket监听端口
             </summary>
+        </member>
+        <member name="M:AuroraNative.WebSockets.Server.#ctor(AuroraNative.Event)">
+            <summary>
+            创建一个 <see cref="T:AuroraNative.WebSockets.Server"/> 实例
+            </summary>
+            <param name="Event">重写后的事件类实例</param>
         </member>
         <member name="M:AuroraNative.WebSockets.Server.Create">
             <summary>
