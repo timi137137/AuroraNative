@@ -43,7 +43,7 @@
             <param name="AutoEscape">是否转义<para>默认：false</para></param>
             <returns>返回消息ID，错误返回-1</returns>
         </member>
-        <member name="M:AuroraNative.Api.SendGroupForwardMessage(System.Int64,Newtonsoft.Json.Linq.JArray)">
+        <member name="M:AuroraNative.Api.SendGroupForwardMessage(System.Int64,System.Object)">
             <summary>
             转发合并消息 - 群
             </summary>

@@ -32,7 +32,14 @@ namespace AuroraNative.WebSockets
         /// <param name="Json">传输Json格式的文本</param>
         public void Send(BaseAPI Json)
         {
-            WebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(Json, Formatting.None))), WebSocketMessageType.Text, true, CancellationToken.None);
+            try
+            {
+                WebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(Json, Formatting.None))), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("调用API出现未知错误！\n" + e.Message, $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            }
         }
 
         internal async Task GetEventAsync()

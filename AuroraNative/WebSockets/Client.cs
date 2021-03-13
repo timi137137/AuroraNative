@@ -50,7 +50,8 @@ namespace AuroraNative.WebSockets
         public bool Create()
         {
             Logger.Debug("正向WebSocket已创建，准备连接...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
-            for (int i = 1;i < 4;i++) {
+            for (int i = 1; i < 4; i++)
+            {
                 try
                 {
                     WebSocket = new ClientWebSocket();
@@ -62,6 +63,9 @@ namespace AuroraNative.WebSockets
                         if (WebSocket.State == WebSocketState.Open)
                         {
                             Logger.Info("已连接至 go-cqhttp 服务器！");
+                            Logger.Debug("防止由于go-cqhttp未初始化异常，连接后需等待2秒...");
+                            Thread.Sleep(2000);
+                            Logger.Debug("go-cqhttp 初始化完毕！");
                             Task.Run(Feedback);
                             Api.Create(this);
                             return true;
@@ -91,7 +95,8 @@ namespace AuroraNative.WebSockets
                 Api.Destroy();
                 Logger.Info("已销毁正向WebSocket");
             }
-            catch(Exception e) {
+            catch (Exception e)
+            {
                 Logger.Error("销毁正向WebSocket失败！\n" + e.Message, $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
             }
         }

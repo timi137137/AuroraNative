@@ -1,9 +1,11 @@
 ﻿using AuroraNative.EventArgs;
+using AuroraNative.Exceptions;
 using AuroraNative.WebSockets;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,7 +45,14 @@ namespace AuroraNative
         /// <param name="WebSocket">WebSocket句柄</param>
         private Api(BaseWebSocket WebSocket)
         {
-            this.WebSocket = WebSocket;
+            if (WebSocket != null)
+            {
+                this.WebSocket = WebSocket;
+            }
+            else
+            {
+                throw new WebSocketException(-1, "传入的WebSocket不可为空");
+            }
         }
 
         #endregion
@@ -101,7 +110,7 @@ namespace AuroraNative
                 { "group_id", GroupID },
                 { "messages", Message }
             };
-
+            //TODO 需要做CQ码转换
             SendCallVoid(new BaseAPI("send_group_forward_msg", Params, "SendGroupForwardMessage:" + Utils.NowTimeSteamp()));
         }
 
@@ -129,7 +138,7 @@ namespace AuroraNative
                 case "group":
                     Params.Add("group_id", GroupID);
                     break;
-                default:
+                case null:
                     if (QID != 0)
                     {
                         Params.Add("user_id", QID);
@@ -139,6 +148,8 @@ namespace AuroraNative
                         Params.Add("group_id", GroupID);
                     }
                     break;
+                default:
+                    throw new Exceptions.JsonException(-1, "传入的参数不符合预期");
             }
 
             return await SendCallMessageID(new BaseAPI("send_msg", Params, "SendMsg:" + Utils.NowTimeSteamp()));
@@ -158,9 +169,18 @@ namespace AuroraNative
         /// </summary>
         /// <param name="MessageID">消息ID</param>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<JObject> GetMsg(string MessageID)
+        public async Task<Dictionary<string, object>> GetMsg(string MessageID)
         {
-            return await SendCallObject(new BaseAPI("get_msg", new JObject() { { "message_id", MessageID } }, "GetMsg:" + Utils.NowTimeSteamp()));
+            JObject Json = await SendCallObject(new BaseAPI("get_msg", new JObject() { { "message_id", MessageID } }, "GetMsg:" + Utils.NowTimeSteamp()));
+
+            return new Dictionary<string, object>() {
+                {"MessageID",Json.Value<int>("message_id")},
+                {"RealID",Json.Value<int>("real_id")},
+                {"Sender",Json.Value<Sender>("sender")},
+                {"Time",Json.Value<int>("time")},
+                {"Message",Json.Value<string>("message")},
+                {"RawMessage",Json.Value<string>("raw_message")}
+            };
         }
 
         /// <summary>
@@ -170,6 +190,7 @@ namespace AuroraNative
         /// <returns>错误返回null,成功返回JObject</returns>
         public async Task<JObject> GetForwardMsg(string MessageID)
         {
+            //TODO 等转发合并消息做完后需要修改这个方法的返回类型
             return await SendCallObject(new BaseAPI("get_forward_msg", new JObject() { { "message_id", MessageID } }, "GetForwardMsg:" + Utils.NowTimeSteamp()));
         }
 
@@ -887,9 +908,17 @@ namespace AuroraNative
 
         internal static Api Create(BaseWebSocket WebSocket)
         {
-            Api api = new Api(WebSocket);
-            Cache.Set($"API{AppDomain.CurrentDomain.Id}", api);
-            return api;
+            try
+            {
+                Api api = new Api(WebSocket);
+                Cache.Set($"API{AppDomain.CurrentDomain.Id}", api);
+                return api;
+            }
+            catch (WebSocketException e)
+            {
+                Logger.Warning("警告，传入的WebSocket有误。错误代码: " + e.ErrorCode);
+            }
+            return null;
         }
 
         internal static void Destroy()

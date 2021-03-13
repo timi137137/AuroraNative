@@ -23,8 +23,10 @@ namespace AuroraNative
         /// </summary>
         /// <param name="Message">要输出的信息</param>
         /// <param name="MethodName">输出的方法名，可选传入</param>
-        public static void Debug(string Message, string MethodName = null) {
-            if (LogLevel <= LogLevel.Debug) {
+        public static void Debug(string Message, string MethodName = null)
+        {
+            if (LogLevel <= LogLevel.Debug)
+            {
                 Output(Message, ConsoleColor.Gray, LogLevel.Debug, MethodName);
             }
         }
@@ -72,12 +74,15 @@ namespace AuroraNative
 
         #region --私有函数--
 
-        internal static void Output(string Message, ConsoleColor Color,LogLevel Level, string MethodName) {
+        internal static void Output(string Message, ConsoleColor Color, LogLevel Level, string MethodName)
+        {
             Console.ForegroundColor = Color;
-            if (MethodName != null) {
+            if (MethodName != null)
+            {
                 Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff") + $" [{Level}]" + $" [{MethodName}] " + Message);
             }
-            else {
+            else
+            {
                 Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + $" [{Level}] " + Message);
             }
             Console.ForegroundColor = ConsoleColor.White;
@@ -89,7 +94,8 @@ namespace AuroraNative
     /// <summary>
     /// 表示日志信息等级的枚举
     /// </summary>
-    public enum LogLevel {
+    public enum LogLevel
+    {
         /// <summary>
 		/// 表示输出日志的等级是 "调试" 级别
 		/// </summary>

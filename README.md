@@ -75,4 +75,4 @@
 
 ### 使用到的开源库
 
-[Newtonsoft.Json](https://www.newtonsoft.com/json)
+[Newtonsoft.Json](https://www.newtonsoft.com/json) | [Microsoft.Extensions.Caching.Memory](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/5.0.0)

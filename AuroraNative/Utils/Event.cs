@@ -1,5 +1,4 @@
 ﻿using AuroraNative.EventArgs;
-using AuroraNative.WebSockets;
 using Newtonsoft.Json.Linq;
 
 namespace AuroraNative
