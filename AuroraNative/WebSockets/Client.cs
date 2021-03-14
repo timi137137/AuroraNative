@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,24 +15,40 @@ namespace AuroraNative.WebSockets
     {
         #region --变量--
 
-        private string Host = "127.0.0.1:6700";
+        private string Host = "127.0.0.1";
+
         /// <summary>
-        /// WebSocket服务端地址<para>请记得带端口号</para>
+        /// WebSocket服务端地址
         /// </summary>
         public string host
         {
             private get { return Host; }
-            set { Host = value; }
+            set
+            {
+                if (value.Contains(":"))
+                {
+                    string[] Cache = value.Split(':');
+                    Host = Cache[0];
+                    Port = int.Parse(Cache[1]);
+                }
+                else
+                {
+                    Host = value;
+                }
+            }
+        }
+        /// <summary>
+        /// WebSocket服务端端口号
+        /// </summary>
+        public int port
+        {
+            private get { return Port; }
+            set { Port = value; }
         }
 
         #endregion
 
         #region --构造函数--
-
-        static Client()
-        {
-            AttributeTypes = Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsAbstract == false && p.IsInterface == false && typeof(Attribute).IsAssignableFrom(p)).ToArray();
-        }
 
         /// <summary>
         /// 创建一个 <see cref="Client"/> 实例
@@ -47,8 +63,13 @@ namespace AuroraNative.WebSockets
         /// <summary>
         /// 创建并连接到WebSocket服务器
         /// </summary>
-        public bool Create()
+        public override void Create()
         {
+            StringBuilder Cache = new StringBuilder();
+            Cache.Append(Host);
+            Cache.Append(':');
+            Cache.Append(Port);
+
             Logger.Debug("正向WebSocket已创建，准备连接...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
             for (int i = 1; i < 4; i++)
             {
@@ -57,8 +78,8 @@ namespace AuroraNative.WebSockets
                     WebSocket = new ClientWebSocket();
                     if (WebSocket is ClientWebSocket socket)
                     {
-                        Logger.Debug($"准备连接至IP:{Host}", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
-                        Task Connect = socket.ConnectAsync(new Uri("ws://" + Host + "/"), CancellationToken.None);
+                        Logger.Debug($"准备连接至IP:{Cache}", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                        Task Connect = socket.ConnectAsync(new Uri("ws://" + Cache.ToString() + "/"), CancellationToken.None);
                         Connect.Wait();
                         if (WebSocket.State == WebSocketState.Open)
                         {
@@ -68,7 +89,7 @@ namespace AuroraNative.WebSockets
                             Logger.Debug("go-cqhttp 初始化完毕！");
                             Task.Run(Feedback);
                             Api.Create(this);
-                            return true;
+                            return;
                         }
                     }
                 }
@@ -79,13 +100,12 @@ namespace AuroraNative.WebSockets
                 }
             }
             Logger.Error("连接到 go-cqhttp 服务器失败！请检查IP是否正确(需要携带端口号)或确认服务器是否启动和初始化完毕！", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
-            return false;
         }
 
         /// <summary>
         /// 立刻中断并释放连接<para>注意！断开后需要重新Create</para>
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             Logger.Debug($"准备销毁正向WebSocket...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
             try
@@ -105,7 +125,7 @@ namespace AuroraNative.WebSockets
 
         #region --私有函数--
 
-        private async void Feedback()
+        internal override async void Feedback()
         {
             while (true)
             {

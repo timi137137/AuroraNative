@@ -4,6 +4,26 @@
         <name>AuroraNative</name>
     </assembly>
     <members>
+        <member name="T:AuroraNative.Friends">
+            <summary>
+            好友 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Friends.UserID">
+            <summary>
+            QQ号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Friends.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Friends.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
         <member name="T:AuroraNative.Api">
             <summary>
             API 类
@@ -29,7 +49,7 @@
             <summary>
             发送私聊消息
             </summary>
-            <param name="QID">接受者QQ号</param>
+            <param name="UserID">接受者QQ号</param>
             <param name="Message">信息内容</param>
             <param name="AutoEscape">是否转义<para>默认：false</para></param>
             <returns>返回消息ID，错误返回-1</returns>
@@ -43,7 +63,7 @@
             <param name="AutoEscape">是否转义<para>默认：false</para></param>
             <returns>返回消息ID，错误返回-1</returns>
         </member>
-        <member name="M:AuroraNative.Api.SendGroupForwardMessage(System.Int64,System.Object)">
+        <member name="M:AuroraNative.Api.SendGroupForwardMessage(System.Int64,Newtonsoft.Json.Linq.JArray)">
             <summary>
             转发合并消息 - 群
             </summary>
@@ -57,7 +77,7 @@
             </summary>
             <param name="Message">信息内容</param>
             <param name="MessageType">信息类型<para>私聊：private</para><para>群聊：group</para></param>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <param name="GroupID">群号</param>
             <param name="AutoEscape">是否转义<para>默认：false</para></param>
             <returns>错误返回-1，成功返回信息ID</returns>
@@ -94,7 +114,7 @@
             群组踢人
             </summary>
             <param name="GroupID">群号</param>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <param name="RejectAddRequest">是否自动拒绝此人加群申请<para>默认:false</para></param>
         </member>
         <member name="M:AuroraNative.Api.SetGroupBan(System.Int64,System.Int64,System.Int32)">
@@ -102,7 +122,7 @@
             群组单人禁言
             </summary>
             <param name="GroupID">群号</param>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <param name="Duration">禁言时间，单位秒<para>默认:30分钟(1800秒)</para></param>
         </member>
         <member name="M:AuroraNative.Api.SetGroupAnonymousBan(System.Int64,System.Int32,System.String,AuroraNative.EventArgs.Anonymous)">
@@ -126,7 +146,7 @@
             设置群管理员
             </summary>
             <param name="GroupID">群号</param>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <param name="Enable">是否设置为管理员<para>默认:true</para></param>
         </member>
         <member name="M:AuroraNative.Api.SetGroupCard(System.Int64,System.Int64,System.String)">
@@ -134,7 +154,7 @@
             设置群名片
             </summary>
             <param name="GroupID">群号</param>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <param name="Card">群名片内容<para>默认:null（删除群名片）</para></param>
         </member>
         <member name="M:AuroraNative.Api.SetGroupName(System.Int64,System.String)">
@@ -156,7 +176,7 @@
             设置群组专属头衔
             </summary>
             <param name="GroupID">群号</param>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <param name="SpecialTitle">群名片内容<para>默认:null（删除群名片）</para></param>
             <param name="Duration">专属头衔有效期, 单位秒, 不过此项似乎没有效果, 可能是只有某些特殊的时间长度有效, 有待测试<para>默认:-1(永久)</para></param>
         </member>
@@ -187,7 +207,7 @@
             <summary>
             获取陌生人信息
             </summary>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <param name="Cache">是否使用缓存，使用缓存响应快但是可能更新不及时<para>默认:false</para></param>
             <returns>错误返回null,成功返回JObject</returns>
         </member>
@@ -216,7 +236,7 @@
             获取群成员信息
             </summary>
             <param name="GroupID">群号</param>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <param name="Cache">是否使用缓存，使用缓存响应快但是可能更新不及时<para>默认:false</para></param>
             <returns>错误返回null,成功返回JObject</returns>
         </member>
@@ -351,7 +371,7 @@
             <summary>
             获取VIP信息
             </summary>
-            <param name="QID">QQ号</param>
+            <param name="UserID">QQ号</param>
             <returns>错误返回null,成功返回JObject</returns>
         </member>
         <member name="M:AuroraNative.Api.SendGroupNotice(System.Int64,System.String)">
@@ -703,146 +723,34 @@
             请求事件
             </summary>
         </member>
-        <member name="T:AuroraNative.Event">
+        <member name="T:AuroraNative.LogLevel">
             <summary>
-            事件类
+            表示日志信息等级的枚举
             </summary>
         </member>
-        <member name="M:AuroraNative.Event.LifeCycle(AuroraNative.EventArgs.LifeCycleArgs)">
+        <member name="F:AuroraNative.LogLevel.Debug">
             <summary>
-            元事件 - 生命周期
+            表示输出日志的等级是 "调试" 级别
             </summary>
-            <param name="e">生命周期事件参数</param>
         </member>
-        <member name="M:AuroraNative.Event.HeartBeat(AuroraNative.EventArgs.HeartBeatArgs)">
+        <member name="F:AuroraNative.LogLevel.Info">
             <summary>
-            元事件 - 心跳
+            表示输出日志的等级是 "信息" 级别
             </summary>
-            <param name="e">心跳事件参数</param>
         </member>
-        <member name="M:AuroraNative.Event.PrivateMessage(AuroraNative.EventArgs.PrivateMessageArgs)">
+        <member name="F:AuroraNative.LogLevel.Warning">
             <summary>
-            消息事件 - 私聊消息
+            表示输出日志的等级是 "警告" 级别
             </summary>
-            <param name="e">私聊消息参数</param>
         </member>
-        <member name="M:AuroraNative.Event.GroupMessage(AuroraNative.EventArgs.GroupMessageArgs)">
+        <member name="F:AuroraNative.LogLevel.Error">
             <summary>
-            消息事件 - 群消息
+            表示输出日志的等级是 "错误" 级别
             </summary>
-            <param name="e">群消息参数</param>
         </member>
-        <member name="M:AuroraNative.Event.FriendAddRequest(AuroraNative.EventArgs.FriendAddRequsetArgs)">
+        <member name="F:AuroraNative.LogLevel.Off">
             <summary>
-            请求事件 - 好友请求
-            </summary>
-            <param name="e">好友请求参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupAddRequest(AuroraNative.EventArgs.GroupAddRequestArgs)">
-            <summary>
-            请求事件 - 群请求
-            </summary>
-            <param name="e">群请求参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupUpload(AuroraNative.EventArgs.GroupUploadArgs)">
-            <summary>
-            通知事件 - 群文件上传
-            </summary>
-            <param name="e">群文件上传参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupManageChange(AuroraNative.EventArgs.GroupManageChangeArgs)">
-            <summary>
-            通知事件 - 群管理员变动
-            </summary>
-            <param name="e">群管理员变动参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupMemberDecrease(AuroraNative.EventArgs.GroupMemberDecreaseArgs)">
-            <summary>
-            通知事件 - 群成员减少
-            </summary>
-            <param name="e">群成员减少参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupMemberIncrease(AuroraNative.EventArgs.GroupMemberIncreaseArgs)">
-            <summary>
-            通知事件 - 群成员增加
-            </summary>
-            <param name="e">群成员增加参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupBanSpeak(AuroraNative.EventArgs.GroupBanSpeakArgs)">
-            <summary>
-            通知事件 - 群禁言
-            </summary>
-            <param name="e">群禁言参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.FriendAdd(AuroraNative.EventArgs.FriendAddArgs)">
-            <summary>
-            通知事件 - 好友添加
-            </summary>
-            <param name="e">好友添加参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupMessageRecall(AuroraNative.EventArgs.GroupMessageRecallArgs)">
-            <summary>
-            通知事件 - 群消息撤回
-            </summary>
-            <param name="e">群消息撤回参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.PrivateMessageRecall(AuroraNative.EventArgs.PrivateMessageRecallArgs)">
-            <summary>
-            通知事件 - 好友消息撤回
-            </summary>
-            <param name="e">好友消息撤回参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupPoke(AuroraNative.EventArgs.GroupPokeArgs)">
-            <summary>
-            通知事件 - 群内戳一戳
-            </summary>
-            <param name="e">群内戳一戳参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.PrivatePoke(AuroraNative.EventArgs.PrivatePokeArgs)">
-            <summary>
-            通知事件 - 好友戳一戳
-            </summary>
-            <param name="e">群内戳一戳参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupRedPoketLuckyKing(AuroraNative.EventArgs.GroupRedPoketLuckyKingArgs)">
-            <summary>
-            通知事件 - 群红包运气王提示
-            </summary>
-            <param name="e">群红包运气王提示参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupMemberHonorChange(AuroraNative.EventArgs.GroupMemberHonorChangeArgs)">
-            <summary>
-            通知事件 - 群成员荣誉变更提示
-            </summary>
-            <param name="e">群成员荣誉变更提示参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GroupCardVerify(AuroraNative.EventArgs.GroupCardVerifyArgs)">
-            <summary>
-            通知事件 - 群成员名片更新（核验）
-            </summary>
-            <param name="e">群成员名片更新（核验）参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.GetOfflineFile(AuroraNative.EventArgs.GetOfflineFileArgs)">
-            <summary>
-            通知事件 - 接收到离线文件
-            </summary>
-            <param name="e">接收到离线文件参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.ClientStatusChange(AuroraNative.EventArgs.ClientStatusChangeArgs)">
-            <summary>
-            通知事件 - 其他客户端在线状态变更
-            </summary>
-            <param name="e">其他客户端在线状态变更参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.EssenceMessageChange(AuroraNative.EventArgs.EssenceMessageChangeArgs)">
-            <summary>
-            通知事件 - 精华消息变更
-            </summary>
-            <param name="e">精华消息变更参数</param>
-        </member>
-        <member name="M:AuroraNative.Event.RouterNotify(Newtonsoft.Json.Linq.JObject)">
-            <summary>
-            请勿使用，用于子事件分发
+            表示不输出日志
             </summary>
         </member>
         <member name="T:AuroraNative.EventArgs.Anonymous">
@@ -1789,6 +1697,148 @@
             异常 类 -- 关于WebSocket异常
             </summary>
         </member>
+        <member name="T:AuroraNative.Event">
+            <summary>
+            事件类
+            </summary>
+        </member>
+        <member name="M:AuroraNative.Event.LifeCycle(AuroraNative.EventArgs.LifeCycleArgs)">
+            <summary>
+            元事件 - 生命周期
+            </summary>
+            <param name="e">生命周期事件参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.HeartBeat(AuroraNative.EventArgs.HeartBeatArgs)">
+            <summary>
+            元事件 - 心跳
+            </summary>
+            <param name="e">心跳事件参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.PrivateMessage(AuroraNative.EventArgs.PrivateMessageArgs)">
+            <summary>
+            消息事件 - 私聊消息
+            </summary>
+            <param name="e">私聊消息参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupMessage(AuroraNative.EventArgs.GroupMessageArgs)">
+            <summary>
+            消息事件 - 群消息
+            </summary>
+            <param name="e">群消息参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.FriendAddRequest(AuroraNative.EventArgs.FriendAddRequsetArgs)">
+            <summary>
+            请求事件 - 好友请求
+            </summary>
+            <param name="e">好友请求参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupAddRequest(AuroraNative.EventArgs.GroupAddRequestArgs)">
+            <summary>
+            请求事件 - 群请求
+            </summary>
+            <param name="e">群请求参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupUpload(AuroraNative.EventArgs.GroupUploadArgs)">
+            <summary>
+            通知事件 - 群文件上传
+            </summary>
+            <param name="e">群文件上传参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupManageChange(AuroraNative.EventArgs.GroupManageChangeArgs)">
+            <summary>
+            通知事件 - 群管理员变动
+            </summary>
+            <param name="e">群管理员变动参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupMemberDecrease(AuroraNative.EventArgs.GroupMemberDecreaseArgs)">
+            <summary>
+            通知事件 - 群成员减少
+            </summary>
+            <param name="e">群成员减少参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupMemberIncrease(AuroraNative.EventArgs.GroupMemberIncreaseArgs)">
+            <summary>
+            通知事件 - 群成员增加
+            </summary>
+            <param name="e">群成员增加参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupBanSpeak(AuroraNative.EventArgs.GroupBanSpeakArgs)">
+            <summary>
+            通知事件 - 群禁言
+            </summary>
+            <param name="e">群禁言参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.FriendAdd(AuroraNative.EventArgs.FriendAddArgs)">
+            <summary>
+            通知事件 - 好友添加
+            </summary>
+            <param name="e">好友添加参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupMessageRecall(AuroraNative.EventArgs.GroupMessageRecallArgs)">
+            <summary>
+            通知事件 - 群消息撤回
+            </summary>
+            <param name="e">群消息撤回参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.PrivateMessageRecall(AuroraNative.EventArgs.PrivateMessageRecallArgs)">
+            <summary>
+            通知事件 - 好友消息撤回
+            </summary>
+            <param name="e">好友消息撤回参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupPoke(AuroraNative.EventArgs.GroupPokeArgs)">
+            <summary>
+            通知事件 - 群内戳一戳
+            </summary>
+            <param name="e">群内戳一戳参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.PrivatePoke(AuroraNative.EventArgs.PrivatePokeArgs)">
+            <summary>
+            通知事件 - 好友戳一戳
+            </summary>
+            <param name="e">群内戳一戳参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupRedPoketLuckyKing(AuroraNative.EventArgs.GroupRedPoketLuckyKingArgs)">
+            <summary>
+            通知事件 - 群红包运气王提示
+            </summary>
+            <param name="e">群红包运气王提示参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupMemberHonorChange(AuroraNative.EventArgs.GroupMemberHonorChangeArgs)">
+            <summary>
+            通知事件 - 群成员荣誉变更提示
+            </summary>
+            <param name="e">群成员荣誉变更提示参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GroupCardVerify(AuroraNative.EventArgs.GroupCardVerifyArgs)">
+            <summary>
+            通知事件 - 群成员名片更新（核验）
+            </summary>
+            <param name="e">群成员名片更新（核验）参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.GetOfflineFile(AuroraNative.EventArgs.GetOfflineFileArgs)">
+            <summary>
+            通知事件 - 接收到离线文件
+            </summary>
+            <param name="e">接收到离线文件参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.ClientStatusChange(AuroraNative.EventArgs.ClientStatusChangeArgs)">
+            <summary>
+            通知事件 - 其他客户端在线状态变更
+            </summary>
+            <param name="e">其他客户端在线状态变更参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.EssenceMessageChange(AuroraNative.EventArgs.EssenceMessageChangeArgs)">
+            <summary>
+            通知事件 - 精华消息变更
+            </summary>
+            <param name="e">精华消息变更参数</param>
+        </member>
+        <member name="M:AuroraNative.Event.RouterNotify(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            请勿使用，用于子事件分发
+            </summary>
+        </member>
         <member name="T:AuroraNative.Logger">
             <summary>
             彩色日志输出类
@@ -1827,31 +1877,6 @@
             <param name="Message">要输出的信息</param>
             <param name="MethodName">输出的方法名，可选传入</param>
         </member>
-        <member name="T:AuroraNative.LogLevel">
-            <summary>
-            表示日志信息等级的枚举
-            </summary>
-        </member>
-        <member name="F:AuroraNative.LogLevel.Debug">
-            <summary>
-            表示输出日志的等级是 "调试" 级别
-            </summary>
-        </member>
-        <member name="F:AuroraNative.LogLevel.Info">
-            <summary>
-            表示输出日志的等级是 "信息" 级别
-            </summary>
-        </member>
-        <member name="F:AuroraNative.LogLevel.Warning">
-            <summary>
-            表示输出日志的等级是 "警告" 级别
-            </summary>
-        </member>
-        <member name="F:AuroraNative.LogLevel.Error">
-            <summary>
-            表示输出日志的等级是 "错误" 级别
-            </summary>
-        </member>
         <member name="T:AuroraNative.Utils">
             <summary>
             通用方法 类
@@ -1862,7 +1887,7 @@
             通过 枚举Description 转为枚举
             </summary>
             <typeparam name="T">枚举</typeparam>
-            <param name="description">需要转换的Description</param>
+            <param name="Description">需要转换的Description</param>
             <returns>返回该枚举</returns>
         </member>
         <member name="M:AuroraNative.Utils.GetChildTypeByPostType(Newtonsoft.Json.Linq.JObject)">
@@ -1883,6 +1908,16 @@
             WebSocket 基础类
             </summary>
         </member>
+        <member name="M:AuroraNative.WebSockets.BaseWebSocket.Create">
+            <summary>
+            客户端创建 抽象方法
+            </summary>
+        </member>
+        <member name="M:AuroraNative.WebSockets.BaseWebSocket.Dispose">
+            <summary>
+            客户端销毁 抽象方法
+            </summary>
+        </member>
         <member name="M:AuroraNative.WebSockets.BaseWebSocket.Send(AuroraNative.BaseAPI)">
             <summary>
             发送数据到服务端/客户端
@@ -1897,7 +1932,12 @@
         </member>
         <member name="P:AuroraNative.WebSockets.Client.host">
             <summary>
-            WebSocket服务端地址<para>请记得带端口号</para>
+            WebSocket服务端地址
+            </summary>
+        </member>
+        <member name="P:AuroraNative.WebSockets.Client.port">
+            <summary>
+            WebSocket服务端端口号
             </summary>
         </member>
         <member name="M:AuroraNative.WebSockets.Client.#ctor(AuroraNative.Event)">

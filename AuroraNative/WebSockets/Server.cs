@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using System.Reflection;
@@ -16,11 +15,10 @@ namespace AuroraNative.WebSockets
     {
         #region --变量--
 
-        private string Port = "6700";
         /// <summary>
         /// WebSocket监听端口
         /// </summary>
-        public string port
+        public int port
         {
             private get { return Port; }
             set { Port = value; }
@@ -32,11 +30,6 @@ namespace AuroraNative.WebSockets
         #endregion
 
         #region --构造函数--
-
-        static Server()
-        {
-            AttributeTypes = Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsAbstract == false && p.IsInterface == false && typeof(Attribute).IsAssignableFrom(p)).ToArray();
-        }
 
         /// <summary>
         /// 创建一个 <see cref="Server"/> 实例
@@ -51,13 +44,13 @@ namespace AuroraNative.WebSockets
         /// <summary>
         /// 创建WebSocket服务器并监听端口
         /// </summary>
-        public void Create()
+        public override void Create()
         {
             try
             {
                 Logger.Debug("反向WebSocket已创建，准备监听...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
                 Listener = new HttpListener();
-                Listener.Prefixes.Add("http://*:" + Port + "/");
+                Listener.Prefixes.Add("http://*:" + Port.ToString() + "/");
                 Listener.Start();
                 Logger.Info("开始监听来自 go-cqhttp 客户端的连接...");
                 Task.Run(Feedback);
@@ -77,7 +70,7 @@ namespace AuroraNative.WebSockets
         /// <summary>
         /// 立刻中断并释放连接<para>注意！断开后需要重新Create</para>
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             Logger.Debug($"准备销毁反向WebSocket...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
             try
@@ -98,7 +91,7 @@ namespace AuroraNative.WebSockets
 
         #region --私有函数--
 
-        private async void Feedback()
+        internal override async void Feedback()
         {
             while (true)
             {

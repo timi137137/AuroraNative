@@ -62,15 +62,15 @@ namespace AuroraNative
         /// <summary>
         /// 发送私聊消息
         /// </summary>
-        /// <param name="QID">接受者QQ号</param>
+        /// <param name="UserID">接受者QQ号</param>
         /// <param name="Message">信息内容</param>
         /// <param name="AutoEscape">是否转义<para>默认：false</para></param>
         /// <returns>返回消息ID，错误返回-1</returns>
-        public async Task<string> SendPrivateMessage(long QID, string Message, bool AutoEscape = false)
+        public async Task<string> SendPrivateMessage(long UserID, string Message, bool AutoEscape = false)
         {
             JObject Params = new JObject
             {
-                { "user_id", QID },
+                { "user_id", UserID },
                 { "message", Message },
                 { "auto_escape", AutoEscape }
             };
@@ -119,11 +119,11 @@ namespace AuroraNative
         /// </summary>
         /// <param name="Message">信息内容</param>
         /// <param name="MessageType">信息类型<para>私聊：private</para><para>群聊：group</para></param>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <param name="GroupID">群号</param>
         /// <param name="AutoEscape">是否转义<para>默认：false</para></param>
         /// <returns>错误返回-1，成功返回信息ID</returns>
-        public async Task<string> SendMsg(string Message, string MessageType = null, long QID = 0, long GroupID = 0, bool AutoEscape = false)
+        public async Task<string> SendMsg(string Message, string MessageType = null, long UserID = 0, long GroupID = 0, bool AutoEscape = false)
         {
             JObject Params = new JObject() {
                 { "message", Message},
@@ -133,15 +133,15 @@ namespace AuroraNative
             switch (MessageType)
             {
                 case "private":
-                    Params.Add("user_id", QID);
+                    Params.Add("user_id", UserID);
                     break;
                 case "group":
                     Params.Add("group_id", GroupID);
                     break;
                 case null:
-                    if (QID != 0)
+                    if (UserID != 0)
                     {
-                        Params.Add("user_id", QID);
+                        Params.Add("user_id", UserID);
                     }
                     else if (GroupID != 0)
                     {
@@ -199,26 +199,33 @@ namespace AuroraNative
         /// </summary>
         /// <param name="Filename">图片缓存文件名,带不带后缀你喜欢就好</param>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<JObject> GetImage(string Filename)
+        public async Task<Dictionary<string, object>> GetImage(string Filename)
         {
             if (!Filename.Contains(".image"))
             {
                 Filename += ".image";
             }
-            return await SendCallObject(new BaseAPI("get_image", new JObject() { { "file", Filename } }, "GetImage:" + Utils.NowTimeSteamp()));
+
+            JObject Json = await SendCallObject(new BaseAPI("get_image", new JObject() { { "file", Filename } }, "GetImage:" + Utils.NowTimeSteamp()));
+
+            return new Dictionary<string, object>() {
+                {"Size",Json.Value<int>("size")},
+                {"FileName",Json.Value<string>("filename")},
+                {"Url",Json.Value<string>("url")}
+            };
         }
 
         /// <summary>
         /// 群组踢人
         /// </summary>
         /// <param name="GroupID">群号</param>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <param name="RejectAddRequest">是否自动拒绝此人加群申请<para>默认:false</para></param>
-        public void SetGroupKick(long GroupID, long QID, bool RejectAddRequest = false)
+        public void SetGroupKick(long GroupID, long UserID, bool RejectAddRequest = false)
         {
             JObject Params = new JObject
             {
-                { "user_id", QID },
+                { "user_id", UserID },
                 { "group_id", GroupID },
                 { "reject_add_request", RejectAddRequest }
             };
@@ -230,13 +237,13 @@ namespace AuroraNative
         /// 群组单人禁言
         /// </summary>
         /// <param name="GroupID">群号</param>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <param name="Duration">禁言时间，单位秒<para>默认:30分钟(1800秒)</para></param>
-        public void SetGroupBan(long GroupID, long QID, int Duration = 1800)
+        public void SetGroupBan(long GroupID, long UserID, int Duration = 1800)
         {
             JObject Params = new JObject
             {
-                { "user_id", QID },
+                { "user_id", UserID },
                 { "group_id", GroupID },
                 { "duration", Duration }
             };
@@ -291,13 +298,13 @@ namespace AuroraNative
         /// 设置群管理员
         /// </summary>
         /// <param name="GroupID">群号</param>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <param name="Enable">是否设置为管理员<para>默认:true</para></param>
-        public void SetGroupAdmin(long GroupID, long QID, bool Enable = true)
+        public void SetGroupAdmin(long GroupID, long UserID, bool Enable = true)
         {
             JObject Params = new JObject
             {
-                { "user_id", QID },
+                { "user_id", UserID },
                 { "group_id", GroupID },
                 { "enable", Enable }
             };
@@ -309,13 +316,13 @@ namespace AuroraNative
         /// 设置群名片
         /// </summary>
         /// <param name="GroupID">群号</param>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <param name="Card">群名片内容<para>默认:null（删除群名片）</para></param>
-        public void SetGroupCard(long GroupID, long QID, string Card = null)
+        public void SetGroupCard(long GroupID, long UserID, string Card = null)
         {
             JObject Params = new JObject
             {
-                { "user_id", QID },
+                { "user_id", UserID },
                 { "group_id", GroupID },
                 { "card", Card }
             };
@@ -359,14 +366,14 @@ namespace AuroraNative
         /// 设置群组专属头衔
         /// </summary>
         /// <param name="GroupID">群号</param>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <param name="SpecialTitle">群名片内容<para>默认:null（删除群名片）</para></param>
         /// <param name="Duration">专属头衔有效期, 单位秒, 不过此项似乎没有效果, 可能是只有某些特殊的时间长度有效, 有待测试<para>默认:-1(永久)</para></param>
-        public void SetGroupSpecialTitle(long GroupID, long QID, string SpecialTitle = null, int Duration = -1)
+        public void SetGroupSpecialTitle(long GroupID, long UserID, string SpecialTitle = null, int Duration = -1)
         {
             JObject Params = new JObject
             {
-                { "user_id", QID },
+                { "user_id", UserID },
                 { "group_id", GroupID },
                 { "duration", Duration },
                 { "special_title", SpecialTitle }
@@ -417,35 +424,48 @@ namespace AuroraNative
         /// 获取登录号信息
         /// </summary>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<JObject> GetLoginInfo()
+        public async Task<Dictionary<string, object>> GetLoginInfo()
         {
-            return await SendCallObject(new BaseAPI("get_login_info", null, "GetLoginInfo:" + Utils.NowTimeSteamp()));
+            JObject Json = await SendCallObject(new BaseAPI("get_login_info", null, "GetLoginInfo:" + Utils.NowTimeSteamp()));
+
+            return new Dictionary<string, object>() {
+                {"UserID",Json.Value<long>("user_id")},
+                {"NickName",Json.Value<string>("nickname")}
+            };
         }
 
         /// <summary>
         /// 获取陌生人信息
         /// </summary>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <param name="Cache">是否使用缓存，使用缓存响应快但是可能更新不及时<para>默认:false</para></param>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<JObject> GetStrangerInfo(long QID, bool Cache = false)
+        public async Task<Dictionary<string, object>> GetStrangerInfo(long UserID, bool Cache = false)
         {
             JObject Params = new JObject
             {
-                { "user_id", QID },
+                { "user_id", UserID },
                 { "no_cache ", Cache }
             };
 
-            return await SendCallObject(new BaseAPI("get_stranger_info", Params, "GetStrangerInfo:" + Utils.NowTimeSteamp()));
+            JObject Json = await SendCallObject(new BaseAPI("get_stranger_info", Params, "GetStrangerInfo:" + Utils.NowTimeSteamp()));
+
+            return new Dictionary<string, object>() {
+                {"UserID",Json.Value<int>("user_id")},
+                {"NickName",Json.Value<string>("nickname")},
+                {"Sex",Json.Value<string>("sex")},
+                {"Age",Json.Value<string>("age")},
+                {"QID",Json.Value<string>("qid")}
+            };
         }
 
         /// <summary>
         /// 获取好友列表
         /// </summary>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<JObject> GetFriendList()
+        public async Task<List<Friends>> GetFriendList()
         {
-            return await SendCallObject(new BaseAPI("get_friend_list", null, "GetFriendList:" + Utils.NowTimeSteamp()));
+            return (await SendCallArray(new BaseAPI("get_friend_list", null, "GetFriendList:" + Utils.NowTimeSteamp()))).ToObject<List<Friends>>();
         }
 
         /// <summary>
@@ -478,15 +498,15 @@ namespace AuroraNative
         /// 获取群成员信息
         /// </summary>
         /// <param name="GroupID">群号</param>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <param name="Cache">是否使用缓存，使用缓存响应快但是可能更新不及时<para>默认:false</para></param>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<JObject> GetGroupMemberInfo(long GroupID, long QID, bool Cache = false)
+        public async Task<JObject> GetGroupMemberInfo(long GroupID, long UserID, bool Cache = false)
         {
             JObject Params = new JObject
             {
                 { "group_id", GroupID },
-                { "user_id", QID },
+                { "user_id", UserID },
                 { "no_cache ", Cache }
             };
 
@@ -542,9 +562,26 @@ namespace AuroraNative
         /// 获取版本信息
         /// </summary>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<JObject> GetVersionInfo()
+        public async Task<Dictionary<string, object>> GetVersionInfo()
         {
-            return await SendCallObject(new BaseAPI("get_version_info", null, "GetVersionInfo:" + Utils.NowTimeSteamp()));
+            JObject Json = await SendCallObject(new BaseAPI("get_version_info", null, "GetVersionInfo:" + Utils.NowTimeSteamp()));
+
+            return new Dictionary<string, object>() {
+                {"AppFullName",Json.Value<string>("app_full_name")},
+                {"AppName",Json.Value<string>("app_name")},
+                {"AppVersion",Json.Value<string>("app_version")},
+                {"CQDirectory",Json.Value<string>("coolq_directory")},
+                {"CQEdition",Json.Value<string>("coolq_edition")},
+                {"IsGoCqhttp",Json.Value<bool>("go-cqhttp")},
+                {"PluginBuildConfiguration",Json.Value<string>("plugin_build_configuration")},
+                {"PluginBuildNumber",Json.Value<string>("plugin_build_number")},
+                {"PluginVersion",Json.Value<string>("plugin_version")},
+                {"Protocol",Json.Value<string>("protocol")},
+                {"ProtocolVersion",Json.Value<string>("protocol_version")},
+                {"RuntimeOS",Json.Value<string>("runtime_os")},
+                {"RuntimeVersion",Json.Value<string>("runtime_version")},
+                {"Version",Json.Value<string>("version")}
+            };
         }
 
         /// <summary>
@@ -717,11 +754,11 @@ namespace AuroraNative
         /// <summary>
         /// 获取VIP信息
         /// </summary>
-        /// <param name="QID">QQ号</param>
+        /// <param name="UserID">QQ号</param>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<JObject> GetVIPInfo(long QID)
+        public async Task<JObject> GetVIPInfo(long UserID)
         {
-            return await SendCallObject(new BaseAPI("_get_vip_info", new JObject { { "user_id", QID } }, "GetGroupAtAllRemain:" + Utils.NowTimeSteamp()));
+            return await SendCallObject(new BaseAPI("_get_vip_info", new JObject { { "user_id", UserID } }, "GetGroupAtAllRemain:" + Utils.NowTimeSteamp()));
         }
 
         /// <summary>
@@ -840,8 +877,7 @@ namespace AuroraNative
 
         private async Task<string> SendCallMessageID(BaseAPI Params)
         {
-            WebSocket.Send(Params);
-            TaskList.Add(Params.UniqueCode, "Sended");
+            SendCall(Params);
 
             string Result = "-1";
             await Task.Run(() => { Result = FeedbackMessageID(Params.UniqueCode); });
@@ -850,12 +886,30 @@ namespace AuroraNative
 
         private async Task<JObject> SendCallObject(BaseAPI Params)
         {
-            WebSocket.Send(Params);
-            TaskList.Add(Params.UniqueCode, "Sended");
+            SendCall(Params);
 
             JObject Result = null;
             await Task.Run(() => { Result = FeedbackObject(Params.UniqueCode); });
             return Result;
+        }
+
+        private async Task<JArray> SendCallArray(BaseAPI Params)
+        {
+            SendCall(Params);
+
+            JArray Result = null;
+            await Task.Run(() => { Result = FeedbackArray(Params.UniqueCode); });
+            return Result;
+        }
+
+        private void SendCall(BaseAPI Params)
+        {
+            Logger.Debug($"API调用:\n请求的接口:{Params.Action}\n请求的唯一码:{Params.UniqueCode}\n请求的参数:\n{Params.Params}");
+            WebSocket.Send(Params);
+            if (!TaskList.TryGetValue(Params.UniqueCode, out _))
+            {
+                TaskList.Add(Params.UniqueCode, "Sended");
+            }
         }
 
         private void SendCallVoid(BaseAPI Params)
@@ -889,6 +943,18 @@ namespace AuroraNative
             return null;
         }
 
+        private static JArray FeedbackArray(string UniqueCode)
+        {
+            JObject FBJson = GetFeedback(UniqueCode);
+
+            //判断返回
+            if (FBJson["status"].ToString() == "ok")
+            {
+                return JArray.Parse(FBJson["data"].ToString());
+            }
+            return null;
+        }
+
         private static JObject GetFeedback(string UniqueCode)
         {
             JObject FBJson = new JObject();
@@ -912,6 +978,14 @@ namespace AuroraNative
             {
                 Api api = new Api(WebSocket);
                 Cache.Set($"API{AppDomain.CurrentDomain.Id}", api);
+                Task.Run(() =>
+                {
+                    Thread.Sleep(5000);
+                    if (!BaseWebSocket.IsCheckVersion)
+                    {
+                        Event.CheckVersion();
+                    }
+                });
                 return api;
             }
             catch (WebSocketException e)

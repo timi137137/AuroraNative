@@ -27,7 +27,7 @@ namespace AuroraNative
         {
             if (LogLevel <= LogLevel.Debug)
             {
-                Output(Message, ConsoleColor.Gray, LogLevel.Debug, MethodName);
+                Output(Message, ConsoleColor.Gray, LogLevel.Debug, MethodName, true);
             }
         }
 
@@ -74,43 +74,31 @@ namespace AuroraNative
 
         #region --私有函数--
 
-        internal static void Output(string Message, ConsoleColor Color, LogLevel Level, string MethodName)
+        internal static void Output(string Message, ConsoleColor Color, LogLevel Level, string MethodName, bool IsFine = false)
         {
             Console.ForegroundColor = Color;
-            if (MethodName != null)
+            string NowTime;
+
+            if (!IsFine)
             {
-                Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff") + $" [{Level}]" + $" [{MethodName}] " + Message);
+                NowTime = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             }
             else
             {
-                Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + $" [{Level}] " + Message);
+                NowTime = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
+            }
+
+            if (MethodName != null)
+            {
+                Console.WriteLine($"[{NowTime}]" + $" [{Level}]" + $" [{MethodName}]: " + Message);
+            }
+            else
+            {
+                Console.WriteLine($"[{NowTime}]" + $" [{Level}]: " + Message);
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
 
         #endregion
-    }
-
-    /// <summary>
-    /// 表示日志信息等级的枚举
-    /// </summary>
-    public enum LogLevel
-    {
-        /// <summary>
-		/// 表示输出日志的等级是 "调试" 级别
-		/// </summary>
-		Debug = 0,
-        /// <summary>
-        /// 表示输出日志的等级是 "信息" 级别
-        /// </summary>
-        Info = 1,
-        /// <summary>
-        /// 表示输出日志的等级是 "警告" 级别
-        /// </summary>
-        Warning = 2,
-        /// <summary>
-        /// 表示输出日志的等级是 "错误" 级别
-        /// </summary>
-        Error = 3
     }
 }

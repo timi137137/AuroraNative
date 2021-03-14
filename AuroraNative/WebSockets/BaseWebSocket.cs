@@ -17,20 +17,34 @@ namespace AuroraNative.WebSockets
     {
         #region --变量--
 
+        internal int Port = 6700;
         internal WebSocket WebSocket;
         internal Event EventHook;
         internal JObject Json;
-        internal static Type[] AttributeTypes;
+        internal static readonly Type[] AttributeTypes = Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsAbstract == false && p.IsInterface == false && typeof(Attribute).IsAssignableFrom(p)).ToArray();
+        internal static readonly Version DependencyVersion = new Version("0.9.40");
+        internal static bool IsCheckVersion = false;
 
         #endregion
 
         #region --公开函数--
 
         /// <summary>
+        /// 客户端创建 抽象方法
+        /// </summary>
+        public abstract void Create();
+        /// <summary>
+        /// 客户端销毁 抽象方法
+        /// </summary>
+        public abstract void Dispose();
+
+        internal abstract void Feedback();
+
+        /// <summary>
         /// 发送数据到服务端/客户端
         /// </summary>
         /// <param name="Json">传输Json格式的文本</param>
-        public void Send(BaseAPI Json)
+        internal void Send(BaseAPI Json)
         {
             try
             {
@@ -64,7 +78,7 @@ namespace AuroraNative.WebSockets
                     {
                         foreach (MethodInfo Method in EventHook.GetType().GetMethods().Where(p => p.GetCustomAttribute<PostTypeAttribute>() != null))
                         {
-                            if (Method.GetCustomAttribute(Type) is BaseAttribute attribute && attribute.Type == (string)Json.GetValue(Utils.GetChildTypeByPostType(Json)))
+                            if (Method.GetCustomAttribute(Type) is BaseAttribute Attribute && Attribute.Type == (string)Json.GetValue(Utils.GetChildTypeByPostType(Json)))
                             {
                                 ParameterInfo Parameter = Method.GetParameters().SingleOrDefault();
 
