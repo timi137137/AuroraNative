@@ -17,40 +17,59 @@ namespace AuroraNative.WebSockets
     {
         #region --变量--
 
-        /// <summary>
-        /// Websocket句柄
-        /// </summary>
+        internal int Port = 6700;
         internal WebSocket WebSocket;
-        /// <summary>
-        /// 事件钩子
-        /// </summary>
-        public Event EventHook;
-
+        internal Event EventHook;
         internal JObject Json;
-        internal static Type[] AttributeTypes;
+        internal static readonly Type[] AttributeTypes = Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsAbstract == false && p.IsInterface == false && typeof(Attribute).IsAssignableFrom(p)).ToArray();
+        internal static readonly Version DependencyVersion = new Version("0.9.40");
+        internal static bool IsCheckVersion = false;
 
         #endregion
 
         #region --公开函数--
 
         /// <summary>
+        /// 客户端创建 抽象方法
+        /// </summary>
+        public abstract void Create();
+        /// <summary>
+        /// 客户端销毁 抽象方法
+        /// </summary>
+        public abstract void Dispose();
+
+        internal abstract void Feedback();
+
+        /// <summary>
         /// 发送数据到服务端/客户端
         /// </summary>
         /// <param name="Json">传输Json格式的文本</param>
-        public void Send(BaseAPI Json)
+        internal void Send(BaseAPI Json)
         {
-            WebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(Json, Formatting.None))), WebSocketMessageType.Text, true, CancellationToken.None);
+            try
+            {
+                WebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(Json, Formatting.None))), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("调用API出现未知错误！\n" + e.Message, $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            }
         }
 
         internal async Task GetEventAsync()
         {
-            ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[5120]);
+            ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[10240]);
             WebSocketReceiveResult Result = await WebSocket.ReceiveAsync(BytesReceived, CancellationToken.None);
-            Json = JObject.Parse(Encoding.UTF8.GetString(BytesReceived.Array, 0, Result.Count));
+            if (Result.Count == 0) {return;}
+            Json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(BytesReceived.Array, 0, Result.Count));
 
             if (Json.TryGetValue("echo", out JToken Token))
             {
-                Api.TaskList[Json["echo"].ToString()] = Json;
+                if (Json.TryGetValue("status", out JToken Cache) && Cache.ToString() != "ok") {
+                    Logger.Warning(Json.ToString(), $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                }
+                
+                Api.TaskList[Token.ToString()] = Json;
             }
             else
             {
@@ -64,7 +83,7 @@ namespace AuroraNative.WebSockets
                     {
                         foreach (MethodInfo Method in EventHook.GetType().GetMethods().Where(p => p.GetCustomAttribute<PostTypeAttribute>() != null))
                         {
-                            if (Method.GetCustomAttribute(Type) is BaseAttribute attribute && attribute.Type == (string)Json.GetValue(Utils.GetChildTypeByPostType(Json)))
+                            if (Method.GetCustomAttribute(Type) is BaseAttribute Attribute && Attribute.Type == (string)Json.GetValue(Utils.GetChildTypeByPostType(Json)))
                             {
                                 ParameterInfo Parameter = Method.GetParameters().SingleOrDefault();
 

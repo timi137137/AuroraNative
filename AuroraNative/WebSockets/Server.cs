@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using System.Reflection;
@@ -16,11 +15,10 @@ namespace AuroraNative.WebSockets
     {
         #region --变量--
 
-        private string Port = "6700";
         /// <summary>
         /// WebSocket监听端口
         /// </summary>
-        public string port
+        public int port
         {
             private get { return Port; }
             set { Port = value; }
@@ -33,10 +31,11 @@ namespace AuroraNative.WebSockets
 
         #region --构造函数--
 
-        static Server()
-        {
-            AttributeTypes = Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsAbstract == false && p.IsInterface == false && typeof(Attribute).IsAssignableFrom(p)).ToArray();
-        }
+        /// <summary>
+        /// 创建一个 <see cref="Server"/> 实例
+        /// </summary>
+        /// <param name="Event">重写后的事件类实例</param>
+        public Server(Event Event) => EventHook = Event;
 
         #endregion
 
@@ -45,46 +44,79 @@ namespace AuroraNative.WebSockets
         /// <summary>
         /// 创建WebSocket服务器并监听端口
         /// </summary>
-        public void Create()
+        public override void Create()
         {
-            Listener = new HttpListener();
-            Listener.Prefixes.Add("http://*:" + Port + "/");
-            Listener.Start();
-            Task.Run(Feedback);
-            while (!IsConnect)
+            try
             {
-                Thread.Sleep(100);
+                Logger.Debug("反向WebSocket已创建，准备监听...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                Listener = new HttpListener();
+                Listener.Prefixes.Add("http://*:" + Port.ToString() + "/");
+                Listener.Start();
+                Logger.Info("开始监听来自 go-cqhttp 客户端的连接...");
+                Task.Run(Feedback);
+                while (!IsConnect)
+                {
+                    Thread.Sleep(100);
+                }
+            }
+            catch (HttpListenerException)
+            {
+                Logger.Error("无法启动监听服务器，请确保使用管理员权限运行。否则无法监听！", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                Console.ReadKey();
+                Environment.Exit(0);
             }
         }
 
         /// <summary>
         /// 立刻中断并释放连接<para>注意！断开后需要重新Create</para>
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
-            Listener.Stop();
-            WebSocket.Dispose();
-            WebSocket.Abort();
+            Logger.Debug($"准备销毁反向WebSocket...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            try
+            {
+                Listener.Stop();
+                WebSocket.Dispose();
+                WebSocket.Abort();
+                Api.Destroy();
+                Logger.Info("已销毁反向WebSocket");
+            }
+            catch (Exception e)
+            {
+                Logger.Error("销毁反向WebSocket失败！\n" + e.Message, $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+            }
         }
 
         #endregion
 
         #region --私有函数--
 
-        private async void Feedback()
+        internal override async void Feedback()
         {
             while (true)
             {
-                HttpListenerContext Context = await Listener.GetContextAsync();
-                if (Context.Request.IsWebSocketRequest)
+                try
                 {
-                    HttpListenerWebSocketContext SocketContext = await Context.AcceptWebSocketAsync(null);
-                    WebSocket = SocketContext.WebSocket;
-                    IsConnect = true;
-                    while (WebSocket.State == WebSocketState.Open)
+                    HttpListenerContext Context = await Listener.GetContextAsync();
+                    if (Context.Request.IsWebSocketRequest)
                     {
-                        await GetEventAsync();
+                        Logger.Info("收到来自 go-cqhttp 客户端的连接！连接已建立！");
+                        HttpListenerWebSocketContext SocketContext = await Context.AcceptWebSocketAsync(null);
+                        WebSocket = SocketContext.WebSocket;
+                        Logger.Debug("防止由于go-cqhttp未初始化异常，连接后需等待5秒...");
+                        Thread.Sleep(5000);
+                        Logger.Debug("go-cqhttp 初始化完毕！");
+                        IsConnect = true;
+                        Api.Create(this);
+                        while (WebSocket.State == WebSocketState.Open)
+                        {
+                            await GetEventAsync();
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    Logger.Error("反向WebSocket出现未知错误！\n" + e.Message, $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
                 }
             }
         }

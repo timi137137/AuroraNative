@@ -39,9 +39,15 @@
   - 优化内部算法或修改类型（如将返回的JObject类型抽象为新自定义类型） - vX.X.X+1
   - 重命名/删除/新增 文件/命名空间/API - vX.X+1.X
 
+## 文档
+
+开发文档:[点我查看](https://auroranative.mikuy.cn)
+
+> 开发文档是与框架一起更新的，因此文档也处于快速迭代状态。
+
 ## 兼容性
 
-### 接口
+### 通讯方式
 
 - [ ] HTTP API
 - [ ] 反向 HTTP POST
@@ -50,7 +56,7 @@
 
 ## 关于 ISSUE
 
-如果没有大问题请到 Discussions 处提问
+如果没有大问题请到 [Discussions](https://github.com/timi137137/AuroraNative/discussions) 处提问
 
 以下 ISSUE 会被直接关闭
 
@@ -69,4 +75,4 @@
 
 ### 使用到的开源库
 
-[Newtonsoft.Json](https://www.newtonsoft.com/json)
+[Newtonsoft.Json](https://www.newtonsoft.com/json) | [Microsoft.Extensions.Caching.Memory](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/5.0.0)

@@ -13,21 +13,21 @@ namespace AuroraNative
         /// 通过 枚举Description 转为枚举
         /// </summary>
         /// <typeparam name="T">枚举</typeparam>
-        /// <param name="description">需要转换的Description</param>
+        /// <param name="Description">需要转换的Description</param>
         /// <returns>返回该枚举</returns>
-        public static T GetEnumByDescription<T>(string description) where T : Enum
+        public static T GetEnumByDescription<T>(string Description) where T : Enum
         {
             System.Reflection.FieldInfo[] fields = typeof(T).GetFields();
             foreach (System.Reflection.FieldInfo field in fields)
             {
                 object[] objs = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                if (objs.Length > 0 && (objs[0] as DescriptionAttribute).Description == description)
+                if (objs.Length > 0 && (objs[0] as DescriptionAttribute).Description == Description)
                 {
                     return (T)field.GetValue(null);
                 }
             }
 
-            throw new ArgumentException(string.Format("{0} 未能找到对应的枚举.", description), "Description");
+            throw new ArgumentException(string.Format("{0} 未能找到对应的枚举.", Description), nameof(Description));
         }
 
         /// <summary>
