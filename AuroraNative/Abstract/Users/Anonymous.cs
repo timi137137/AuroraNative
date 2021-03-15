@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AuroraNative.EventArgs
+namespace AuroraNative
 {
     /// <summary>
     /// 提供用于描述匿名信息的基础类, 该类是抽象的

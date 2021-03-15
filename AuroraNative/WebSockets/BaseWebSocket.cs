@@ -58,13 +58,18 @@ namespace AuroraNative.WebSockets
 
         internal async Task GetEventAsync()
         {
-            ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[5120]);
+            ArraySegment<byte> BytesReceived = new ArraySegment<byte>(new byte[10240]);
             WebSocketReceiveResult Result = await WebSocket.ReceiveAsync(BytesReceived, CancellationToken.None);
-            Json = JObject.Parse(Encoding.UTF8.GetString(BytesReceived.Array, 0, Result.Count));
+            if (Result.Count == 0) {return;}
+            Json = JsonConvert.DeserializeObject<JObject>(Encoding.UTF8.GetString(BytesReceived.Array, 0, Result.Count));
 
             if (Json.TryGetValue("echo", out JToken Token))
             {
-                Api.TaskList[Json["echo"].ToString()] = Json;
+                if (Json.TryGetValue("status", out JToken Cache) && Cache.ToString() != "ok") {
+                    Logger.Warning(Json.ToString(), $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
+                }
+                
+                Api.TaskList[Token.ToString()] = Json;
             }
             else
             {

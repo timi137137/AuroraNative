@@ -103,8 +103,8 @@ namespace AuroraNative.WebSockets
                         Logger.Info("收到来自 go-cqhttp 客户端的连接！连接已建立！");
                         HttpListenerWebSocketContext SocketContext = await Context.AcceptWebSocketAsync(null);
                         WebSocket = SocketContext.WebSocket;
-                        Logger.Debug("防止由于go-cqhttp未初始化异常，连接后需等待2秒...");
-                        Thread.Sleep(2000);
+                        Logger.Debug("防止由于go-cqhttp未初始化异常，连接后需等待5秒...");
+                        Thread.Sleep(5000);
                         Logger.Debug("go-cqhttp 初始化完毕！");
                         IsConnect = true;
                         Api.Create(this);

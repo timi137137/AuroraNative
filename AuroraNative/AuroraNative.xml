@@ -4,6 +4,527 @@
         <name>AuroraNative</name>
     </assembly>
     <members>
+        <member name="T:AuroraNative.Device">
+            <summary>
+            提供用于描述事件参数的基础类, 该类是抽象的
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Device.AppID">
+            <summary>
+            客户端ID
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Device.Name">
+            <summary>
+            设备名称
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Device.Type">
+            <summary>
+            设备类型
+            </summary>
+        </member>
+        <member name="M:AuroraNative.Device.#ctor(System.Int64,System.String,System.String)">
+            <summary>
+            初始化 <see cref="T:AuroraNative.Device"/> 类的新实例
+            </summary>
+            <param name="AppID">客户端ID</param>
+            <param name="Name">设备名称</param>
+            <param name="Type">设备类型</param>
+        </member>
+        <member name="T:AuroraNative.Essences">
+            <summary>
+            精华消息 抽象类
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Essences.SenderID">
+            <summary>
+            发送者QQ 号
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Essences.SenderNickName">
+            <summary>
+            发送者昵称
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Essences.SenderTime">
+            <summary>
+            消息发送时间
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Essences.OperatorID">
+            <summary>
+            操作者QQ 号
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Essences.OperatorNickName">
+            <summary>
+            操作者昵称
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Essences.OperatorTime">
+            <summary>
+            精华设置时间
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Essences.MessageID">
+            <summary>
+            消息ID
+            </summary>
+        </member>
+        <member name="T:AuroraNative.File">
+            <summary>
+            群文件 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.FileID">
+            <summary>
+            文件ID
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.FileName">
+            <summary>
+            文件名称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.BusID">
+            <summary>
+            文件类型
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.FileSize">
+            <summary>
+            文件大小
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.UploadTime">
+            <summary>
+            上传时间
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.DeadTime">
+            <summary>
+            过期时间，永久为零
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.ModifyTime">
+            <summary>
+            最后修改时间
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.DownloadsCount">
+            <summary>
+            下载次数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.Uploader">
+            <summary>
+            上传者ID
+            </summary>
+        </member>
+        <member name="F:AuroraNative.File.UploaderName">
+            <summary>
+            上传者名字
+            </summary>
+        </member>
+        <member name="T:AuroraNative.Folder">
+            <summary>
+            群文件夹 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Folder.FolderID">
+            <summary>
+            文件夹ID
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Folder.FolderName">
+            <summary>
+            文件夹名称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Folder.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Folder.Creator">
+            <summary>
+            创建者
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Folder.CreatoName">
+            <summary>
+            创建者名称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Folder.TotalFilesCount">
+            <summary>
+            子文件数量
+            </summary>
+        </member>
+        <member name="T:AuroraNative.GroupMember">
+            <summary>
+            群成员信息 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.GroupID">
+            <summary>
+            群号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.UserID">
+            <summary>
+            QQ号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.Card">
+            <summary>
+            群名片
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.Sex">
+            <summary>
+            现在人数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.MaxMemberCount">
+            <summary>
+            最大人数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.Area">
+            <summary>
+            地区
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.JoinTime">
+            <summary>
+            加群时间戳
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.LastSentTime">
+            <summary>
+            最后发言时间戳
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.Level">
+            <summary>
+            成员等级
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.UnFriendly">
+            <summary>
+            是否不良记录成员
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.ExclusiveTitle">
+            <summary>
+            专属头衔
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.ExclusiveTitleTime">
+            <summary>
+            专属头衔过期时间戳
+            </summary>
+        </member>
+        <member name="F:AuroraNative.GroupMember.IsChangeCard">
+            <summary>
+            是否允许修改群名片
+            </summary>
+        </member>
+        <member name="T:AuroraNative.Groups">
+            <summary>
+            群组 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Groups.GroupID">
+            <summary>
+            群号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Groups.GroupName">
+            <summary>
+            群名称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Groups.MemberCount">
+            <summary>
+            现在人数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Groups.MaxMemberCount">
+            <summary>
+            最大人数
+            </summary>
+        </member>
+        <member name="T:AuroraNative.HonorListInfo">
+            <summary>
+            群荣誉详细信息 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.HonorListInfo.UserID">
+            <summary>
+            QQ号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.HonorListInfo.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.HonorListInfo.Avater">
+            <summary>
+            头像URL
+            </summary>
+        </member>
+        <member name="F:AuroraNative.HonorListInfo.Description">
+            <summary>
+            荣誉描述
+            </summary>
+        </member>
+        <member name="F:AuroraNative.HonorListInfo.DayCount">
+            <summary>
+            持续天数
+            </summary>
+        </member>
+        <member name="T:AuroraNative.BaseRequest">
+            <summary>
+            群系统消息 - 消息列表 基抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.BaseRequest.RequestID">
+            <summary>
+            请求ID
+            </summary>
+        </member>
+        <member name="F:AuroraNative.BaseRequest.GroupID">
+            <summary>
+            群号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.BaseRequest.GroupName">
+            <summary>
+            群名称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.BaseRequest.Checked">
+            <summary>
+            是否已处理
+            </summary>
+        </member>
+        <member name="F:AuroraNative.BaseRequest.Actor">
+            <summary>
+            处理者,未处理是0
+            </summary>
+        </member>
+        <member name="T:AuroraNative.InvitedRequest">
+            <summary>
+            群系统消息 - 邀请消息列表 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.InvitedRequest.InvitorUserID">
+            <summary>
+            邀请者
+            </summary>
+        </member>
+        <member name="F:AuroraNative.InvitedRequest.InvitorNickName">
+            <summary>
+            邀请者昵称
+            </summary>
+        </member>
+        <member name="T:AuroraNative.JoinRequest">
+            <summary>
+            群系统消息 - 进群消息列表 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.JoinRequest.RequesterUserID">
+            <summary>
+            请求者
+            </summary>
+        </member>
+        <member name="F:AuroraNative.JoinRequest.RequesterNickName">
+            <summary>
+            请求者昵称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.JoinRequest.Message">
+            <summary>
+            验证信息
+            </summary>
+        </member>
+        <member name="T:AuroraNative.Messages">
+            <summary>
+            消息 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.Anonymous">
+            <summary>
+            匿名信息
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.Font">
+            <summary>
+            字体
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.GroupID">
+            <summary>
+            群号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.RawMessage">
+            <summary>
+            原始消息内容
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.MessageID">
+            <summary>
+            消息ID
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.MessageSeq">
+            <summary>
+            消息序号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.MessageType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.PostType">
+            <summary>
+            消息事件主类型
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.SubType">
+            <summary>
+            消息事件子类型
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.SelfID">
+            <summary>
+            收到事件的机器人QQ号
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.Sender">
+            <summary>
+            发送者
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.TimeStamp">
+            <summary>
+            消息时间戳
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Messages.UserID">
+            <summary>
+            发送者QQ号
+            </summary>
+        </member>
+        <member name="T:AuroraNative.OCRTextDetection">
+            <summary>
+            OCR结果信息 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.OCRTextDetection.Text">
+            <summary>
+            文本
+            </summary>
+        </member>
+        <member name="F:AuroraNative.OCRTextDetection.Confidence">
+            <summary>
+            置信度
+            </summary>
+        </member>
+        <member name="F:AuroraNative.OCRTextDetection.Coordinates">
+            <summary>
+            坐标
+            </summary>
+        </member>
+        <member name="T:AuroraNative.Statistics">
+            <summary>
+            运行统计 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Statistics.PacketReceived">
+            <summary>
+            收到的数据包总数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Statistics.PacketSent">
+            <summary>
+            发送的数据包总数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Statistics.PacketLost">
+            <summary>
+            数据包丢失总数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Statistics.MessageReceived">
+            <summary>
+            接受信息总数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Statistics.MessageSent">
+            <summary>
+            	发送信息总数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Statistics.DisconnectsCount">
+            <summary>
+            TCP 链接断开次数
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Statistics.LostsCount">
+            <summary>
+            账号掉线次数
+            </summary>
+        </member>
+        <member name="T:AuroraNative.Anonymous">
+            <summary>
+            提供用于描述匿名信息的基础类, 该类是抽象的
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Anonymous.ID">
+            <summary>
+            匿名用户 ID
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Anonymous.Name">
+            <summary>
+            匿名用户名称
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Anonymous.Flag">
+            <summary>
+            匿名用户 flag, 在调用禁言 API 时需要传入
+            </summary>
+        </member>
+        <member name="M:AuroraNative.Anonymous.#ctor(System.Int64,System.String,System.String)">
+            <summary>
+            初始化 <see cref="T:AuroraNative.Anonymous"/> 类的新实例
+            </summary>
+            <param name="ID">匿名用户 ID</param>
+            <param name="Name">匿名用户名称</param>
+            <param name="Flag">匿名用户 flag, 在调用禁言 API 时需要传入</param>
+        </member>
         <member name="T:AuroraNative.Friends">
             <summary>
             好友 抽象类
@@ -23,6 +544,70 @@
             <summary>
             备注
             </summary>
+        </member>
+        <member name="T:AuroraNative.Sender">
+            <summary>
+            提供用于描述发送者信息的基础类, 该类是抽象的
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.UserID">
+            <summary>
+            发送者 QQ 号
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.Sex">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.Card">
+            <summary>
+            群名片／备注
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.Area">
+            <summary>
+            地区
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.Level">
+            <summary>
+            成员等级
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Sender.Title">
+            <summary>
+            专属头衔
+            </summary>
+        </member>
+        <member name="M:AuroraNative.Sender.#ctor(System.Int64,System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,System.String)">
+            <summary>
+            初始化 <see cref="T:AuroraNative.Sender"/> 类的新实例
+            </summary>
+            <param name="UserID">发送者 QQ 号</param>
+            <param name="NickName">昵称</param>
+            <param name="Card">群名片／备注</param>
+            <param name="Sex">性别</param>
+            <param name="Age">年龄</param>
+            <param name="Area">地区</param>
+            <param name="Level">成员等级</param>
+            <param name="Role">角色</param>
+            <param name="Title">专属头衔</param>
         </member>
         <member name="T:AuroraNative.Api">
             <summary>
@@ -125,7 +710,7 @@
             <param name="UserID">QQ号</param>
             <param name="Duration">禁言时间，单位秒<para>默认:30分钟(1800秒)</para></param>
         </member>
-        <member name="M:AuroraNative.Api.SetGroupAnonymousBan(System.Int64,System.Int32,System.String,AuroraNative.EventArgs.Anonymous)">
+        <member name="M:AuroraNative.Api.SetGroupAnonymousBan(System.Int64,System.Int32,System.String,AuroraNative.Anonymous)">
             <summary>
             群组匿名用户禁言
             </summary>
@@ -753,34 +1338,6 @@
             表示不输出日志
             </summary>
         </member>
-        <member name="T:AuroraNative.EventArgs.Anonymous">
-            <summary>
-            提供用于描述匿名信息的基础类, 该类是抽象的
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Anonymous.ID">
-            <summary>
-            匿名用户 ID
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Anonymous.Name">
-            <summary>
-            匿名用户名称
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Anonymous.Flag">
-            <summary>
-            匿名用户 flag, 在调用禁言 API 时需要传入
-            </summary>
-        </member>
-        <member name="M:AuroraNative.EventArgs.Anonymous.#ctor(System.Int64,System.String,System.String)">
-            <summary>
-            初始化 <see cref="T:AuroraNative.EventArgs.Anonymous"/> 类的新实例
-            </summary>
-            <param name="ID">匿名用户 ID</param>
-            <param name="Name">匿名用户名称</param>
-            <param name="Flag">匿名用户 flag, 在调用禁言 API 时需要传入</param>
-        </member>
         <member name="T:AuroraNative.EventArgs.Base">
             <summary>
             提供用于描述事件参数的基础类, 该类是抽象的
@@ -809,37 +1366,9 @@
             <param name="SelfID">收到事件的机器人QQ号</param>
             <param name="PostType">上报类型</param>
         </member>
-        <member name="T:AuroraNative.EventArgs.Device">
-            <summary>
-            提供用于描述事件参数的基础类, 该类是抽象的
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Device.AppID">
-            <summary>
-            客户端ID
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Device.Name">
-            <summary>
-            设备名称
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Device.Type">
-            <summary>
-            设备类型
-            </summary>
-        </member>
-        <member name="M:AuroraNative.EventArgs.Device.#ctor(System.Int64,System.String,System.String)">
-            <summary>
-            初始化 <see cref="T:AuroraNative.EventArgs.Device"/> 类的新实例
-            </summary>
-            <param name="AppID">客户端ID</param>
-            <param name="Name">设备名称</param>
-            <param name="Type">设备类型</param>
-        </member>
         <member name="T:AuroraNative.EventArgs.File">
             <summary>
-            提供用于描述匿名信息的基础类, 该类是抽象的
+            提供用于描述文件数据的基础类, 该类是抽象的
             </summary>
         </member>
         <member name="P:AuroraNative.EventArgs.File.ID">
@@ -877,70 +1406,6 @@
             <param name="Url">下载链接</param>
             <param name="BusID">busid ( 目前不清楚有什么作用 )</param>
         </member>
-        <member name="T:AuroraNative.EventArgs.Sender">
-            <summary>
-            提供用于描述发送者信息的基础类, 该类是抽象的
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.UserID">
-            <summary>
-            发送者 QQ 号
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.NickName">
-            <summary>
-            昵称
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.Sex">
-            <summary>
-            性别
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.Age">
-            <summary>
-            年龄
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.Card">
-            <summary>
-            群名片／备注
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.Area">
-            <summary>
-            地区
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.Level">
-            <summary>
-            成员等级
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.Role">
-            <summary>
-            角色
-            </summary>
-        </member>
-        <member name="P:AuroraNative.EventArgs.Sender.Title">
-            <summary>
-            专属头衔
-            </summary>
-        </member>
-        <member name="M:AuroraNative.EventArgs.Sender.#ctor(System.Int64,System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,System.String)">
-            <summary>
-            初始化 <see cref="T:AuroraNative.EventArgs.Sender"/> 类的新实例
-            </summary>
-            <param name="UserID">发送者 QQ 号</param>
-            <param name="NickName">昵称</param>
-            <param name="Card">群名片／备注</param>
-            <param name="Sex">性别</param>
-            <param name="Age">年龄</param>
-            <param name="Area">地区</param>
-            <param name="Level">成员等级</param>
-            <param name="Role">角色</param>
-            <param name="Title">专属头衔</param>
-        </member>
         <member name="T:AuroraNative.EventArgs.GroupMessageArgs">
             <summary>
             提供用于描述消息事件中群聊消息事件参数的类
@@ -956,7 +1421,7 @@
             匿名消息
             </summary>
         </member>
-        <member name="M:AuroraNative.EventArgs.GroupMessageArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String,System.Int32,System.Int64,System.Int64,AuroraNative.EventArgs.Anonymous,System.String,System.String,System.Int32,AuroraNative.EventArgs.Sender)">
+        <member name="M:AuroraNative.EventArgs.GroupMessageArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String,System.Int32,System.Int64,System.Int64,AuroraNative.Anonymous,System.String,System.String,System.Int32,AuroraNative.Sender)">
             <summary>
             初始化 <see cref="T:AuroraNative.EventArgs.MessageEventArgs"/> 类的新实例
             </summary>
@@ -1019,7 +1484,7 @@
             发送者信息
             </summary>
         </member>
-        <member name="M:AuroraNative.EventArgs.MessageEventArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String,System.Int32,System.Int64,System.String,System.String,System.Int32,AuroraNative.EventArgs.Sender)">
+        <member name="M:AuroraNative.EventArgs.MessageEventArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String,System.Int32,System.Int64,System.String,System.String,System.Int32,AuroraNative.Sender)">
             <summary>
             初始化 <see cref="T:AuroraNative.EventArgs.Base"/> 类的新实例
             </summary>
@@ -1040,7 +1505,7 @@
             提供用于描述消息事件中私聊消息事件参数的类
             </summary>
         </member>
-        <member name="M:AuroraNative.EventArgs.PrivateMessageArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String,System.Int32,System.Int64,System.String,System.String,System.Int32,AuroraNative.EventArgs.Sender)">
+        <member name="M:AuroraNative.EventArgs.PrivateMessageArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String,System.Int32,System.Int64,System.String,System.String,System.Int32,AuroraNative.Sender)">
             <summary>
             初始化 <see cref="T:AuroraNative.EventArgs.MessageEventArgs"/> 类的新实例
             </summary>
@@ -1136,7 +1601,7 @@
             当前是否在线
             </summary>
         </member>
-        <member name="M:AuroraNative.EventArgs.ClientStatusChangeArgs.#ctor(System.String,System.String,AuroraNative.EventArgs.Device,System.Boolean)">
+        <member name="M:AuroraNative.EventArgs.ClientStatusChangeArgs.#ctor(System.String,System.String,AuroraNative.Device,System.Boolean)">
             <summary>
             初始化 <see cref="T:AuroraNative.EventArgs.NoticeEventArgs"/> 类的新实例
             </summary>

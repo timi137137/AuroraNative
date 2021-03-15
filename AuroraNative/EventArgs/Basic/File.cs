@@ -3,7 +3,7 @@
 namespace AuroraNative.EventArgs
 {
     /// <summary>
-    /// 提供用于描述匿名信息的基础类, 该类是抽象的
+    /// 提供用于描述文件数据的基础类, 该类是抽象的
     /// </summary>
     public sealed class File
     {
