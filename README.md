@@ -7,6 +7,10 @@
 
 
 <h4 align="center">
+
+<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Ftimi137137%2FAuroraNative?ref=badge_small" alt="FOSSA Status">
+    <img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftimi137137%2FAuroraNative.svg?type=small"/>
+</a>
 <a href="https://www.nuget.org/packages/AuroraNative/">
     <img src="https://img.shields.io/nuget/vpre/AuroraNative?style=flat-square">
 </a>
@@ -19,7 +23,9 @@
 <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Ftimi137137%2FAuroraNative?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftimi137137%2FAuroraNative.svg?type=shield"/></a>
 <img src="https://img.shields.io/github/license/timi137137/AuroraNative?style=flat-square">
 <img src="https://img.shields.io/github/workflow/status/timi137137/AuroraNative/BuildPackages/master?style=flat-square">
+
 </h4>
+
 </div>
 
 ---
@@ -77,7 +83,3 @@
 ### 使用到的开源库
 
 [Newtonsoft.Json](https://www.newtonsoft.com/json) | [Microsoft.Extensions.Caching.Memory](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/5.0.0)
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftimi137137%2FAuroraNative.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftimi137137%2FAuroraNative?ref=badge_large)
