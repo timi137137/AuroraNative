@@ -20,6 +20,7 @@
 <a href="https://github.com/Mrs4s/go-cqhttp/releases">
     <img src="https://img.shields.io/badge/go--cqhttp-v0.9.40--fix4-blueviolet?style=flat-square">
 </a>
+<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Ftimi137137%2FAuroraNative?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftimi137137%2FAuroraNative.svg?type=shield"/></a>
 <img src="https://img.shields.io/github/license/timi137137/AuroraNative?style=flat-square">
 <img src="https://img.shields.io/github/workflow/status/timi137137/AuroraNative/BuildPackages/master?style=flat-square">
 
