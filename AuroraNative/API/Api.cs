@@ -176,7 +176,7 @@ namespace AuroraNative
             return new Dictionary<string, object>() {
                 {"MessageID",Json.Value<int>("message_id")},
                 {"RealID",Json.Value<int>("real_id")},
-                {"Sender",Json.Value<Sender>("sender")},
+                {"Sender",Json["sender"].ToObject<Sender>()},
                 {"Time",Json.Value<int>("time")},
                 {"Message",Json.Value<string>("message")},
                 {"RawMessage",Json.Value<string>("raw_message")}
