@@ -129,7 +129,12 @@ namespace AuroraNative.WebSockets
         {
             while (true)
             {
-                await GetEventAsync();
+                try
+                {
+                    await GetEventAsync();
+                }
+                catch(Exception) {
+                }
             }
         }
 
