@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Numerics;
 
-namespace AuroraNative
+namespace AuroraNative.Type
 {
     /// <summary>
     /// OCR结果信息 抽象类

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AuroraNative
+namespace AuroraNative.Type.Users
 {
     /// <summary>
     /// 好友 抽象类

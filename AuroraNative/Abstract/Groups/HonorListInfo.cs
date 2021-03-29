@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AuroraNative
+namespace AuroraNative.Type.Groups
 {
     /// <summary>
     /// 群荣誉详细信息 抽象类

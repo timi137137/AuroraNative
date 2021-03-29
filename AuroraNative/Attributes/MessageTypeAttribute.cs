@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuroraNative.Enum;
+using System;
 
 namespace AuroraNative
 {
@@ -7,7 +8,7 @@ namespace AuroraNative
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     [PostType(PostType.Message)]
-    public class MessageTypeAttribute : BaseAttribute, IEquatable<MessageTypeAttribute>
+    public class MessageTypeAttribute : Base, IEquatable<MessageTypeAttribute>
     {
         #region --属性--
 
@@ -21,7 +22,7 @@ namespace AuroraNative
         #region --构造函数--
 
         /// <summary>
-        /// 消息事件类型构造函数，初始化 <see cref="BaseAttribute"/> 类的实例
+        /// 消息事件类型构造函数，初始化 <see cref="Base"/> 类的实例
         /// </summary>
         /// <param name="MessageType">消息事件类型</param>
         public MessageTypeAttribute(MessageType MessageType)
@@ -67,20 +68,5 @@ namespace AuroraNative
         }
 
         #endregion
-    }
-
-    /// <summary>
-    /// 消息事件 枚举
-    /// </summary>
-    public enum MessageType
-    {
-        /// <summary>
-        /// 私聊消息
-        /// </summary>
-        @private = 1,
-        /// <summary>
-        /// 群聊消息
-        /// </summary>
-        group = 2
     }
 }

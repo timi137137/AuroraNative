@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace AuroraNative.WebSockets
 {
     /// <summary>
-    /// WebSocket 服务器 封装类
+    /// WebSocket服务器 封装类
     /// <para>反向WebSocket</para>
     /// </summary>
-    public class Server : BaseWebSocket
+    public class Server : WebSocket
     {
         #region --变量--
 
@@ -76,9 +76,9 @@ namespace AuroraNative.WebSockets
             try
             {
                 Listener.Stop();
-                WebSocket.Dispose();
-                WebSocket.Abort();
-                Api.Destroy();
+                WebSockets.Dispose();
+                WebSockets.Abort();
+                API.Destroy();
                 Logger.Info("已销毁反向WebSocket");
             }
             catch (Exception e)
@@ -102,13 +102,13 @@ namespace AuroraNative.WebSockets
                     {
                         Logger.Info("收到来自 go-cqhttp 客户端的连接！连接已建立！");
                         HttpListenerWebSocketContext SocketContext = await Context.AcceptWebSocketAsync(null);
-                        WebSocket = SocketContext.WebSocket;
+                        WebSockets = SocketContext.WebSocket;
                         Logger.Debug("防止由于go-cqhttp未初始化异常，连接后需等待5秒...");
                         Thread.Sleep(5000);
                         Logger.Debug("go-cqhttp 初始化完毕！");
                         IsConnect = true;
-                        Api.Create(this);
-                        while (WebSocket.State == WebSocketState.Open)
+                        API.Create(this);
+                        while (WebSockets.State == WebSocketState.Open)
                         {
                             await GetEventAsync();
                         }

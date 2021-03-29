@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace AuroraNative.WebSockets
 {
     /// <summary>
-    /// WebSocket 客户端 封装类
+    /// WebSocket客户端 封装类
     /// <para>正向 WebSocket</para>
     /// </summary>
-    public class Client : BaseWebSocket
+    public sealed class Client : WebSocket
     {
         #region --变量--
 
@@ -75,20 +75,20 @@ namespace AuroraNative.WebSockets
             {
                 try
                 {
-                    WebSocket = new ClientWebSocket();
-                    if (WebSocket is ClientWebSocket socket)
+                    WebSockets = new ClientWebSocket();
+                    if (WebSockets is ClientWebSocket socket)
                     {
                         Logger.Debug($"准备连接至IP:{Cache}", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
                         Task Connect = socket.ConnectAsync(new Uri("ws://" + Cache.ToString() + "/"), CancellationToken.None);
                         Connect.Wait();
-                        if (WebSocket.State == WebSocketState.Open)
+                        if (WebSockets.State == WebSocketState.Open)
                         {
                             Logger.Info("已连接至 go-cqhttp 服务器！");
                             Logger.Debug("防止由于go-cqhttp未初始化异常，连接后需等待2秒...");
                             Thread.Sleep(2000);
                             Logger.Debug("go-cqhttp 初始化完毕！");
                             Task.Run(Feedback);
-                            Api.Create(this);
+                            API.Create(this);
                             return;
                         }
                     }
@@ -110,9 +110,9 @@ namespace AuroraNative.WebSockets
             Logger.Debug($"准备销毁正向WebSocket...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
             try
             {
-                WebSocket.Dispose();
-                WebSocket.Abort();
-                Api.Destroy();
+                WebSockets.Dispose();
+                WebSockets.Abort();
+                API.Destroy();
                 Logger.Info("已销毁正向WebSocket");
             }
             catch (Exception e)
@@ -133,7 +133,9 @@ namespace AuroraNative.WebSockets
                 {
                     await GetEventAsync();
                 }
-                catch(Exception) {
+                catch (Exception e)
+                {
+                    Logger.Debug("出现未知解析错误:" + e.ToString());
                 }
             }
         }

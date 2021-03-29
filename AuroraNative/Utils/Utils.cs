@@ -15,7 +15,7 @@ namespace AuroraNative
         /// <typeparam name="T">枚举</typeparam>
         /// <param name="Description">需要转换的Description</param>
         /// <returns>返回该枚举</returns>
-        public static T GetEnumByDescription<T>(string Description) where T : Enum
+        public static T GetEnumByDescription<T>(string Description) where T : System.Enum
         {
             System.Reflection.FieldInfo[] fields = typeof(T).GetFields();
             foreach (System.Reflection.FieldInfo field in fields)

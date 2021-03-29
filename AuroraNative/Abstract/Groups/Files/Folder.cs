@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AuroraNative
+namespace AuroraNative.Type.Files
 {
     /// <summary>
     /// 群文件夹 抽象类

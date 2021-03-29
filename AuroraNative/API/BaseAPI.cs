@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 namespace AuroraNative
 {
     /// <summary>
-    /// API基础 抽象类
+    /// API调用类
     /// </summary>
     public sealed class BaseAPI
     {

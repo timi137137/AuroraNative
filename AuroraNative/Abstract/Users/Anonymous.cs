@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AuroraNative
+namespace AuroraNative.Type.Users
 {
     /// <summary>
     /// 提供用于描述匿名信息的基础类, 该类是抽象的

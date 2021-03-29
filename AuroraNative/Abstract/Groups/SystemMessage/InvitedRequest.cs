@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AuroraNative
+namespace AuroraNative.Type.Groups.SystemMessages
 {
     /// <summary>
     /// 群系统消息 - 邀请消息列表 抽象类

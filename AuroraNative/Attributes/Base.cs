@@ -5,7 +5,7 @@ namespace AuroraNative
     /// <summary>
     /// 特性的基类
     /// </summary>
-    public abstract class BaseAttribute : Attribute
+    public abstract class Base : Attribute
     {
         /// <summary>
         /// 子类型，是抽象的
