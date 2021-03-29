@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 
-namespace AuroraNative
+namespace AuroraNative.Type
 {
     /// <summary>
     /// 运行统计 抽象类
     /// </summary>
-    public sealed class Statistics
+    public sealed class RunningStatistics
     {
         #region --属性--
 

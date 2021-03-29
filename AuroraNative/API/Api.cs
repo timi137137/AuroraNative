@@ -1,5 +1,9 @@
-﻿using AuroraNative.EventArgs;
-using AuroraNative.Exceptions;
+﻿using AuroraNative.Exceptions;
+using AuroraNative.Type;
+using AuroraNative.Type.Files;
+using AuroraNative.Type.Groups;
+using AuroraNative.Type.Groups.SystemMessages;
+using AuroraNative.Type.Users;
 using AuroraNative.WebSockets;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -14,17 +18,14 @@ namespace AuroraNative
     /// <summary>
     /// API 类
     /// </summary>
-    public sealed class Api
+    public sealed class API
     {
         #region --变量--
 
-        /// <summary>
-        /// 任务队列
-        /// </summary>
         internal static JObject TaskList = new JObject();
         internal static MemoryCache Cache = new MemoryCache(new MemoryCacheOptions());
 
-        private readonly BaseWebSocket WebSocket;
+        private readonly WebSocket WebSockets;
 
         #endregion
 
@@ -33,7 +34,7 @@ namespace AuroraNative
         /// <summary>
         /// 获取API实例
         /// </summary>
-        public static Api CurrentApi => (Api)Cache.Get($"API{AppDomain.CurrentDomain.Id}");
+        public static API CurrentApi => (API)Cache.Get($"API{AppDomain.CurrentDomain.Id}");
 
         #endregion
 
@@ -42,12 +43,12 @@ namespace AuroraNative
         /// <summary>
         /// 构建函数
         /// </summary>
-        /// <param name="WebSocket">WebSocket句柄</param>
-        private Api(BaseWebSocket WebSocket)
+        /// <param name="WebSockets">WebSocket句柄</param>
+        private API(WebSocket WebSockets)
         {
-            if (WebSocket != null)
+            if (WebSockets != null)
             {
-                this.WebSocket = WebSocket;
+                this.WebSockets = WebSockets;
             }
             else
             {
@@ -110,7 +111,7 @@ namespace AuroraNative
                 { "group_id", GroupID },
                 { "messages", Message }
             };
-            //TODO 需要做CQ码转换
+            //HACK 等昵昵修复获取合并转发的BUG才能继续
             SendCallVoid(new BaseAPI("send_group_forward_msg", Params, "SendGroupForwardMessage:" + Utils.NowTimeSteamp()));
         }
 
@@ -748,10 +749,10 @@ namespace AuroraNative
         /// 获取状态
         /// </summary>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<(bool, Statistics)> GetStatus()
+        public async Task<(bool, RunningStatistics)> GetStatus()
         {
             JObject Json = await SendCallObject(new BaseAPI("get_group_info", null, "GetGroupInfo:" + Utils.NowTimeSteamp()));
-            return (Json.Value<bool>("online"), Json.Value<Statistics>("stat"));
+            return (Json.Value<bool>("online"), Json.Value<RunningStatistics>("stat"));
         }
 
         /// <summary>
@@ -956,16 +957,18 @@ namespace AuroraNative
         private void SendCall(BaseAPI Params)
         {
             Logger.Debug($"API调用:\n请求的接口:{Params.Action}\n请求的唯一码:{Params.UniqueCode}\n请求的参数:\n{Params.Params}");
-            WebSocket.Send(Params);
-            if (!TaskList.TryGetValue(Params.UniqueCode, out _))
-            {
-                TaskList.Add(Params.UniqueCode, "Sended");
+            WebSockets.Send(Params);
+            lock (TaskList) {
+                if (!TaskList.TryGetValue(Params.UniqueCode, out _))
+                {
+                    TaskList.Add(Params.UniqueCode, "Sended");
+                }
             }
         }
 
         private void SendCallVoid(BaseAPI Params)
         {
-            WebSocket.Send(Params);
+            WebSockets.Send(Params);
         }
 
         #endregion
@@ -1012,32 +1015,35 @@ namespace AuroraNative
 
             do
             {
-                if (TaskList[UniqueCode].ToString() != "Sended")
+                lock (TaskList)
                 {
-                    FBJson = TaskList[UniqueCode];
-                    TaskList.Remove(UniqueCode);
-                    break;
+                    if (TaskList[UniqueCode].ToString() != "Sended")
+                    {
+                        FBJson = TaskList[UniqueCode];
+                        TaskList.Remove(UniqueCode);
+                        break;
+                    }
                 }
                 Thread.Sleep(10);
             } while (FBJson == null);
             return FBJson;
         }
 
-        internal static Api Create(BaseWebSocket WebSocket)
+        internal static API Create(WebSocket WebSocket)
         {
             try
             {
-                Api api = new Api(WebSocket);
-                Cache.Set($"API{AppDomain.CurrentDomain.Id}", api);
+                API Api = new API(WebSocket);
+                Cache.Set($"API{AppDomain.CurrentDomain.Id}", Api);
                 Task.Run(() =>
                 {
                     Thread.Sleep(5000);
-                    if (!BaseWebSocket.IsCheckVersion)
+                    if (!WebSocket.IsCheckVersion)
                     {
                         Event.CheckVersion();
                     }
                 });
-                return api;
+                return Api;
             }
             catch (WebSocketException e)
             {

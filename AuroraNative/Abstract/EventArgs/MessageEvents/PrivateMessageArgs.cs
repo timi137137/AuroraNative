@@ -1,4 +1,6 @@
-﻿namespace AuroraNative.EventArgs
+﻿using AuroraNative.Type.Users;
+
+namespace AuroraNative.EventArgs
 {
     /// <summary>
     /// 提供用于描述消息事件中私聊消息事件参数的类

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AuroraNative.Type;
+using Newtonsoft.Json;
 
 namespace AuroraNative.EventArgs
 {

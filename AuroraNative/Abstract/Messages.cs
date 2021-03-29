@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using AuroraNative.Type.Users;
+using Newtonsoft.Json;
 
-namespace AuroraNative
+namespace AuroraNative.Type
 {
     /// <summary>
     /// 消息 抽象类

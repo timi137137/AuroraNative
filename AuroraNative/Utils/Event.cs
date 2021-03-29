@@ -1,4 +1,5 @@
-﻿using AuroraNative.EventArgs;
+﻿using AuroraNative.Enum;
+using AuroraNative.EventArgs;
 using AuroraNative.WebSockets;
 using Newtonsoft.Json.Linq;
 using System;
@@ -238,15 +239,15 @@ namespace AuroraNative
         internal static async void CheckVersion()
         {
             Logger.Debug("开始检查 go-cqhttp 版本是否符合最低版本...");
-            if ((await Api.CurrentApi.GetVersionInfo()).TryGetValue("AppVersion", out object Version) && new Version(Version.ToString().Substring(1, Version.ToString().IndexOf('-') - 1)) < BaseWebSocket.DependencyVersion)
+            /*if ((await API.CurrentApi.GetVersionInfo()).TryGetValue("AppVersion", out object Version) && new Version(Version.ToString().Substring(1, Version.ToString().IndexOf('-') - 1)) < WebSocket.DependencyVersion)
             {
-                Logger.Warning($"框架最低依赖版本与 go-cqhttp 不符！请检查是否为最新的框架或符合的 go-cqhttp\ngo-cqhttp版本:{Version}\n框架最低依赖版本:v{BaseWebSocket.DependencyVersion}");
+                Logger.Warning($"框架最低依赖版本与 go-cqhttp 不符！请检查是否为最新的框架或符合的 go-cqhttp\ngo-cqhttp版本:{Version}\n框架最低依赖版本:v{WebSocket.DependencyVersion}");
             }
             else
             {
                 Logger.Debug("go-cqhttp 版本符合最低版本!");
-            }
-            BaseWebSocket.IsCheckVersion = true;
+            }*/
+            WebSocket.IsCheckVersion = true;
         }
 
         #endregion
