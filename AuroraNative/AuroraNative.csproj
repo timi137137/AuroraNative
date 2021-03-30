@@ -15,13 +15,14 @@
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AssemblyVersion>1.1.0.0329</AssemblyVersion>
-    <FileVersion>1.1.0.0329</FileVersion>
+    <AssemblyVersion>1.1.1.0330</AssemblyVersion>
+    <FileVersion>1.1.1.0330</FileVersion>
     <PackageIcon>Icon.png</PackageIcon>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <AssemblyName>AuroraNative</AssemblyName>
     <RootNamespace>AuroraNative</RootNamespace>
-    <Version>1.1.0-Beta</Version>
+    <Version>1.1.1-Beta</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -42,12 +43,12 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.*" />
+    <PackageReference Include="Newtonsoft.Json" Version="(12.*,)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="(12.*,)" />
   </ItemGroup>
   
 </Project>
