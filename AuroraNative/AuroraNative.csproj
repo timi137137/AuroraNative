@@ -43,12 +43,12 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="(12.*,)" />
+    <PackageReference Include="Newtonsoft.Json" Version="[11.0.1,13)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="(12.*,)" />
+    <PackageReference Include="Newtonsoft.Json" Version="[11.0.1,13)" />
   </ItemGroup>
   
 </Project>
