@@ -1,0 +1,34 @@
+name: PushPackageByTag
+
+on:
+    push:
+        tags:
+        - '*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install dotnet tool
+      run: dotnet tool install -g dotnetCampus.TagToVersion
+ 
+    - name: Set tag to version  
+      run: dotnet TagToVersion -t ${ { github.ref } }
+    
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+
+    - name: Install Nuget
+      uses: nuget/setup-nuget@v1
+      with:        
+        nuget-version: '5.x'
+
+    - name: Add private GitHub registry to NuGet
+      run: |
+        nuget sources add -name github -Source https://nuget.pkg.github.com/timi137137/index.json -Username timi137137 -Password ${{ secrets.GITHUBTOKEN }}
+    - name: Push generated package to GitHub registry
+      run: |
+        nuget push .\bin\release\*.nupkg -Source github -SkipDuplicate
+        nuget push .\bin\release\*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -ApiKey ${{ secrets.NUGETKEY }} -NoSymbols 
