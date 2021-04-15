@@ -22,7 +22,7 @@ jobs:
       - name: Publish to Github
         uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
         with:
-          nupkg-path:  'src/AuroraNative/AuroraNative/AuroraNative/bin/Debug/*.nupkg'
+          nupkg-path:  'AuroraNative/bin/Debug/*.nupkg'
           repo-owner:  'timi137137'
           gh-user:  'timi137137'
           token:  ${{ secrets.GITHUBTOKEN }}
