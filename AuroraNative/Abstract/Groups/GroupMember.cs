@@ -73,7 +73,7 @@ namespace AuroraNative.Type.Groups
         /// 角色
         /// </summary>
         [JsonProperty(PropertyName = "role", NullValueHandling = NullValueHandling.Include)]
-        public int Role;
+        public string Role;
 
         /// <summary>
         /// 是否不良记录成员
