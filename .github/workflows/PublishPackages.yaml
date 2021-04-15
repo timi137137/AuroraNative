@@ -1,0 +1,34 @@
+name: PublishPackages
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Publish to Github
+        uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
+        with:
+          nupkg-path:  '/AuroraNative/AuroraNative/bin/Debug/*.nupkg'
+          repo-owner:  'timi137137'
+          gh-user:  'timi137137'
+          token:  ${{ secrets.GITHUBTOKEN }}
+      - name: Publish to Nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          NUGET_KEY: ${{secrets.NUGETKEY}}
