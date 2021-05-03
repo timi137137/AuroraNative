@@ -1,4 +1,5 @@
-﻿using AuroraNative.Enum;
+﻿using AuroraNative.Attributes;
+using AuroraNative.Enum;
 using AuroraNative.EventArgs;
 using AuroraNative.WebSockets;
 using Newtonsoft.Json.Linq;
@@ -60,6 +61,7 @@ namespace AuroraNative
         /// </summary>
         /// <param name="e">好友请求参数</param>
         [PostType(PostType.Request)]
+        [RequestType(RequestType.friend)]
         public virtual void FriendAddRequest(FriendAddRequsetArgs e) { }
 
         /// <summary>
@@ -67,6 +69,7 @@ namespace AuroraNative
         /// </summary>
         /// <param name="e">群请求参数</param>
         [PostType(PostType.Request)]
+        [RequestType(RequestType.group)]
         public virtual void GroupAddRequest(GroupAddRequestArgs e) { }
 
         #endregion

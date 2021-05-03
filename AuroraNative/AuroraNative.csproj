@@ -15,13 +15,13 @@
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AssemblyVersion>1.1.3.0415</AssemblyVersion>
-    <FileVersion>1.1.3.0415</FileVersion>
+    <AssemblyVersion>1.2.0.0503</AssemblyVersion>
+    <FileVersion>1.2.0.0503</FileVersion>
     <PackageIcon>Icon.png</PackageIcon>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <AssemblyName>AuroraNative</AssemblyName>
     <RootNamespace>AuroraNative</RootNamespace>
-    <Version>1.1.3-Beta</Version>
+    <Version>1.2.0-Beta</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
