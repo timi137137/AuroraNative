@@ -2009,6 +2009,42 @@
             </summary>
             <param name="PostType">上报类型</param>
         </member>
+        <member name="T:AuroraNative.Attributes.RequestTypeAttribute">
+            <summary>
+            请求事件 特性
+            </summary>
+        </member>
+        <member name="P:AuroraNative.Attributes.RequestTypeAttribute.RequestType">
+            <summary>
+            请求事件 枚举
+            </summary>
+        </member>
+        <member name="M:AuroraNative.Attributes.RequestTypeAttribute.#ctor(AuroraNative.Enum.RequestType)">
+            <summary>
+            请求事件类型构造函数，初始化 <see cref="T:AuroraNative.Base"/> 类的实例
+            </summary>
+            <param name="RequestType">请求事件类型</param>
+        </member>
+        <member name="M:AuroraNative.Attributes.RequestTypeAttribute.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AuroraNative.Attributes.RequestTypeAttribute.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuroraNative.Attributes.RequestTypeAttribute.Equals(AuroraNative.Attributes.RequestTypeAttribute)">
+            <summary>
+            
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
         <member name="T:AuroraNative.LogLevel">
             <summary>
             表示日志信息等级的枚举
@@ -2162,6 +2198,21 @@
         <member name="F:AuroraNative.Enum.PostType.Request">
             <summary>
             请求事件
+            </summary>
+        </member>
+        <member name="T:AuroraNative.Enum.RequestType">
+            <summary>
+            请求事件 枚举
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Enum.RequestType.friend">
+            <summary>
+            加好友
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Enum.RequestType.group">
+            <summary>
+            加群
             </summary>
         </member>
         <member name="T:AuroraNative.Exceptions.Base">
