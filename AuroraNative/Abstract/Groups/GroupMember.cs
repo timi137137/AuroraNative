@@ -34,16 +34,16 @@ namespace AuroraNative.Type.Groups
         public string Card;
 
         /// <summary>
-        /// 现在人数
+        /// 性别
         /// </summary>
         [JsonProperty(PropertyName = "sex", NullValueHandling = NullValueHandling.Include)]
         public string Sex;
 
         /// <summary>
-        /// 最大人数
+        /// 年龄
         /// </summary>
         [JsonProperty(PropertyName = "age", NullValueHandling = NullValueHandling.Include)]
-        public int MaxMemberCount;
+        public int Age;
 
         /// <summary>
         /// 地区
