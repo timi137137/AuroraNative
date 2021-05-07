@@ -45,7 +45,6 @@ namespace AuroraNative.Type
         [JsonProperty(PropertyName = "disconnect_times")]
         public uint DisconnectsCount;
 
-
         /// <summary>
         /// 账号掉线次数
         /// </summary>

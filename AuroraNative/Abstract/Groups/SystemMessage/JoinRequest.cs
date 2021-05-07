@@ -25,7 +25,7 @@ namespace AuroraNative.Type.Groups.SystemMessages
         /// 验证信息
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public long Message;
+        public string Message;
 
         #endregion
     }

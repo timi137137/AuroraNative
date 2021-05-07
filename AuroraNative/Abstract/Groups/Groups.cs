@@ -22,15 +22,33 @@ namespace AuroraNative.Type.Groups
         public string GroupName;
 
         /// <summary>
+        /// 群备注
+        /// </summary>
+        [JsonProperty(PropertyName = "group_memo")]
+        public string GroupRemark;
+
+        /// <summary>
+        /// 群创建时间
+        /// </summary>
+        [JsonProperty(PropertyName = "group_create_time", NullValueHandling = NullValueHandling.Ignore)]
+        public uint GroupCreateTime;
+
+        /// <summary>
+        /// 群等级
+        /// </summary>
+        [JsonProperty(PropertyName = "group_level", NullValueHandling = NullValueHandling.Ignore)]
+        public uint GroupLevel;
+
+        /// <summary>
         /// 现在人数
         /// </summary>
-        [JsonProperty(PropertyName = "member_count")]
+        [JsonProperty(PropertyName = "member_count", NullValueHandling = NullValueHandling.Ignore)]
         public int MemberCount;
 
         /// <summary>
         /// 最大人数
         /// </summary>
-        [JsonProperty(PropertyName = "max_member_count")]
+        [JsonProperty(PropertyName = "max_member_count", NullValueHandling = NullValueHandling.Ignore)]
         public int MaxMemberCount;
 
         #endregion
