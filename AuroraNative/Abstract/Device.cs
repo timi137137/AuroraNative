@@ -3,7 +3,7 @@
 namespace AuroraNative.Type
 {
     /// <summary>
-    /// 提供用于描述事件参数的基础类, 该类是抽象的
+    /// 提供用于描述登录设备的基础类, 该类是抽象的
     /// </summary>
     public abstract class Device
     {

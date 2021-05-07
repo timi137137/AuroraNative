@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -111,7 +112,7 @@ namespace AuroraNative
                 { "group_id", GroupID },
                 { "messages", Message }
             };
-            //HACK 等昵昵修复获取合并转发的BUG才能继续
+            //FIXME 等昵昵修复获取合并转发的BUG才能继续
             SendCallVoid(new BaseAPI("send_group_forward_msg", Params, "SendGroupForwardMessage:" + Utils.NowTimeSteamp()));
         }
 
@@ -364,7 +365,7 @@ namespace AuroraNative
         }
 
         /// <summary>
-        /// 设置群组专属头衔
+        /// 设置群组成员专属头衔
         /// </summary>
         /// <param name="GroupID">群号</param>
         /// <param name="UserID">QQ号</param>
@@ -642,20 +643,26 @@ namespace AuroraNative
         /// </summary>
         /// <param name="Image">图片ID</param>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<(List<OCRTextDetection>, string)> OCRImage(string Image)
+        public async Task<Dictionary<string, object>> OCRImage(string Image)
         {
             JObject Json = await SendCallObject(new BaseAPI("ocr_image", new JObject { { "image", Image } }, "OCRImage:" + Utils.NowTimeSteamp()));
-            return (Json.Value<JToken>("texts").ToObject<List<OCRTextDetection>>(), Json.Value<string>("language"));
+            return new Dictionary<string, object>() {
+                { "Texts",Json.Value<JToken>("texts").ToObject<List<OCRTextDetection>>()},
+                { "Language",Json.Value<string>("language")}
+            };
         }
 
         /// <summary>
         /// 获取群系统消息
         /// </summary>
         /// <returns>错误或不存在任何消息返回null,成功返回JObject</returns>
-        public async Task<(List<InvitedRequest>, List<JoinRequest>)> GetGroupSystemMsg()
+        public async Task<Dictionary<string, object>> GetGroupSystemMsg()
         {
             JObject Json = await SendCallObject(new BaseAPI("get_group_system_msg", null, "GetGroupSystemMsg:" + Utils.NowTimeSteamp()));
-            return (Json.Value<JToken>("invited_requests").ToObject<List<InvitedRequest>>(), Json.Value<JToken>("join_requests").ToObject<List<JoinRequest>>());
+            return new Dictionary<string, object>() {
+                { "InvitedRequest",Json.Value<JToken>("invited_requests").ToObject<List<InvitedRequest>>()},
+                { "JoinRequest",Json.Value<JToken>("join_requests").ToObject<List<JoinRequest>>()}
+            };
         }
 
         /// <summary>
@@ -700,11 +707,13 @@ namespace AuroraNative
         /// </summary>
         /// <param name="GroupID">群号</param>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<(List<File>, List<Folder>)> GetGroupRootFiles(long GroupID)
+        public async Task<Dictionary<string, object>> GetGroupRootFiles(long GroupID)
         {
             JObject Json = await SendCallObject(new BaseAPI("get_group_root_files", new JObject { { "group_id", GroupID } }, "GetGroupRootFiles:" + Utils.NowTimeSteamp()));
-
-            return (Json.Value<JToken>("files").ToObject<List<File>>(), Json.Value<JToken>("folders").ToObject<List<Folder>>());
+            return new Dictionary<string, object>() {
+                { "Files",Json.Value<JToken>("files").ToObject<List<File>>()},
+                { "Folder",Json.Value<JToken>("folders").ToObject<List<Folder>>()}
+            };
         }
 
         /// <summary>
@@ -713,7 +722,7 @@ namespace AuroraNative
         /// <param name="GroupID">群号</param>
         /// <param name="FolderID">文件夹ID</param>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<(List<File>, List<Folder>)> GetGroupFilesByFolder(long GroupID, string FolderID)
+        public async Task<Dictionary<string, object>> GetGroupFilesByFolder(long GroupID, string FolderID)
         {
             JObject Params = new JObject
             {
@@ -723,7 +732,10 @@ namespace AuroraNative
 
             JObject Json = await SendCallObject(new BaseAPI("get_group_files_by_folder", Params, "GetGroupFilesByFolder:" + Utils.NowTimeSteamp()));
 
-            return (Json.Value<JToken>("files").ToObject<List<File>>(), Json.Value<JToken>("folders").ToObject<List<Folder>>());
+            return new Dictionary<string, object>() {
+                { "Files",Json.Value<JToken>("files").ToObject<List<File>>()},
+                { "Folder",Json.Value<JToken>("folders").ToObject<List<Folder>>()}
+            };
         }
 
         /// <summary>
@@ -749,10 +761,18 @@ namespace AuroraNative
         /// 获取状态
         /// </summary>
         /// <returns>错误返回null,成功返回JObject</returns>
-        public async Task<(bool, RunningStatistics)> GetStatus()
+        public async Task<Dictionary<string, object>> GetStatus()
         {
             JObject Json = await SendCallObject(new BaseAPI("get_group_info", null, "GetGroupInfo:" + Utils.NowTimeSteamp()));
-            return (Json.Value<bool>("online"), Json.Value<RunningStatistics>("stat"));
+            return new Dictionary<string, object>() {
+                { "AppInitialized",Json.Value<bool>("app_initialized")},
+                { "AppEnabled",Json.Value<bool>("app_enabled")},
+                { "PluginsGood",Json.Value<bool>("plugins_good")},
+                { "AppGood",Json.Value<bool>("app_good")},
+                { "Online",Json.Value<bool>("online")},
+                { "Good",Json.Value<bool>("good")},
+                { "Statistics",Json.Value<RunningStatistics>("stat")}
+            };
         }
 
         /// <summary>
@@ -920,6 +940,27 @@ namespace AuroraNative
         {
             return (await SendCallObject(new BaseAPI("check_url_safely", new JObject { { "url", URL } }, "CheckURLSafely:" + Utils.NowTimeSteamp()))).Value<int>("level");
         }
+
+        #region ==额外API==
+
+        /// <summary>
+        /// 获取指定群头像
+        /// </summary>
+        /// <param name="GroupID">群号</param>
+        /// <param name="SaveTo">保存路径-包括文件名(通常后缀名是jpg)</param>
+        /// <returns>是否成功</returns>
+        public bool DownloadGroupImage(long GroupID,string SaveTo) {
+            try
+            {
+                new WebClient().DownloadFile($"https://p.qlogo.cn/gh/{GroupID}/{GroupID}/100", SaveTo);
+                return true;
+            }
+            catch (Exception _) {
+                return false;
+            }
+        }
+
+        #endregion
 
         #endregion
 
