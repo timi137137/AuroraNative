@@ -16,7 +16,7 @@ namespace AuroraNative.EventArgs
         public long GroupID { get; private set; }
 
         /// <summary>
-        /// 	操作者 QQ 号
+        /// 操作者 QQ 号
         /// </summary>
         [JsonProperty(PropertyName = "operator_id")]
         public long OperatorID { get; private set; }

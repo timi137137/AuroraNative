@@ -10,7 +10,7 @@ namespace AuroraNative.EventArgs
         #region --属性--
 
         /// <summary>
-        /// 	禁言时长，单位秒
+        /// 禁言时长，单位秒
         /// </summary>
         [JsonProperty(PropertyName = "duration")]
         public long Duration { get; private set; }

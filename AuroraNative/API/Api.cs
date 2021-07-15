@@ -471,6 +471,14 @@ namespace AuroraNative
         }
 
         /// <summary>
+        /// 删除好友
+        /// </summary>
+        /// <param name="UserID">好友QQ号</param>
+        public void DeleteFriend(long UserID) {
+            SendCallVoid(new BaseAPI("delete_friend", new JObject{{ "friend_id", UserID }}, "DeleteFriend:" + Utils.NowTimeSteamp()));
+        }
+
+        /// <summary>
         /// 获取群信息
         /// </summary>
         /// <param name="GroupID">群号</param>
@@ -939,6 +947,31 @@ namespace AuroraNative
         public async Task<int> CheckURLSafely(string URL)
         {
             return (await SendCallObject(new BaseAPI("check_url_safely", new JObject { { "url", URL } }, "CheckURLSafely:" + Utils.NowTimeSteamp()))).Value<int>("level");
+        }
+
+        /// <summary>
+        /// 获取在线机型
+        /// </summary>
+        /// <param name="ModelName">机型名字</param>
+        /// <returns>在线机型列表</returns>
+        public async Task<List<Model>> GetModels(string ModelName) {
+            return (await SendCallObject(new BaseAPI("_get_model_show", new JObject { { "model", ModelName } }, "GetModelShow:" + Utils.NowTimeSteamp()))).ToObject<List<Model>>();
+        }
+
+        /// <summary>
+        /// 设置在线机型
+        /// </summary>
+        /// <param name="ModelName">机型名字</param>
+        /// <param name="ShowModelName">在线机型名字</param>
+        public void SetModel(string ModelName, string ShowModelName)
+        {
+            JObject Params = new JObject
+            {
+                { "model", ModelName },
+                { "model_show ", ShowModelName }
+            };
+
+            SendCallVoid(new BaseAPI("_set_model_show", Params, "SetModelShow:" + Utils.NowTimeSteamp()));
         }
 
         #region ==额外API==
