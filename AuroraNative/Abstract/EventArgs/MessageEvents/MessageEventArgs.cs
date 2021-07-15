@@ -23,6 +23,12 @@ namespace AuroraNative.EventArgs
         public string SubType { get; private set; }
 
         /// <summary>
+        /// 临时会话来源
+        /// </summary>
+        [JsonProperty(PropertyName = "temp_source")]
+        public int TempSource { get; private set; }
+
+        /// <summary>
         /// 消息ID
         /// </summary>
         [JsonProperty(PropertyName = "message_id")]

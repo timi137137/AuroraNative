@@ -28,7 +28,7 @@
         </member>
         <member name="T:AuroraNative.Type.Device">
             <summary>
-            提供用于描述事件参数的基础类, 该类是抽象的
+            提供用于描述登录设备的基础类, 该类是抽象的
             </summary>
         </member>
         <member name="P:AuroraNative.Type.Device.AppID">
@@ -211,12 +211,12 @@
         </member>
         <member name="F:AuroraNative.Type.Groups.GroupMember.Sex">
             <summary>
-            现在人数
+            性别
             </summary>
         </member>
-        <member name="F:AuroraNative.Type.Groups.GroupMember.MaxMemberCount">
+        <member name="F:AuroraNative.Type.Groups.GroupMember.Age">
             <summary>
-            最大人数
+            年龄
             </summary>
         </member>
         <member name="F:AuroraNative.Type.Groups.GroupMember.Area">
@@ -277,6 +277,21 @@
         <member name="F:AuroraNative.Type.Groups.Groups.GroupName">
             <summary>
             群名称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Type.Groups.Groups.GroupRemark">
+            <summary>
+            群备注
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Type.Groups.Groups.GroupCreateTime">
+            <summary>
+            群创建时间
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Type.Groups.Groups.GroupLevel">
+            <summary>
+            群等级
             </summary>
         </member>
         <member name="F:AuroraNative.Type.Groups.Groups.MemberCount">
@@ -457,6 +472,21 @@
         <member name="F:AuroraNative.Type.Messages.UserID">
             <summary>
             发送者QQ号
+            </summary>
+        </member>
+        <member name="T:AuroraNative.Type.Model">
+            <summary>
+            机型 抽象类
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Type.Model.Name">
+            <summary>
+            机型名称
+            </summary>
+        </member>
+        <member name="F:AuroraNative.Type.Model.IsPay">
+            <summary>
+            是否付费
             </summary>
         </member>
         <member name="T:AuroraNative.Type.OCRTextDetection">
@@ -747,6 +777,11 @@
             消息子类型
             </summary>
         </member>
+        <member name="P:AuroraNative.EventArgs.MessageEventArgs.TempSource">
+            <summary>
+            临时会话来源
+            </summary>
+        </member>
         <member name="P:AuroraNative.EventArgs.MessageEventArgs.MessageID">
             <summary>
             消息ID
@@ -980,7 +1015,7 @@
         </member>
         <member name="P:AuroraNative.EventArgs.GroupBanSpeakArgs.Duration">
             <summary>
-            	禁言时长，单位秒
+            禁言时长，单位秒
             </summary>
         </member>
         <member name="M:AuroraNative.EventArgs.GroupBanSpeakArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String,System.Int64,System.Int64,System.Int64,System.Int64)">
@@ -1134,7 +1169,7 @@
         </member>
         <member name="P:AuroraNative.EventArgs.GroupMessageRecallArgs.OperatorID">
             <summary>
-            	操作者 QQ 号
+            操作者 QQ 号
             </summary>
         </member>
         <member name="P:AuroraNative.EventArgs.GroupMessageRecallArgs.MessageID">
@@ -1172,7 +1207,7 @@
         </member>
         <member name="P:AuroraNative.EventArgs.GroupNoticeArgs.OperatorID">
             <summary>
-            	操作者 QQ 号
+            操作者 QQ 号
             </summary>
         </member>
         <member name="M:AuroraNative.EventArgs.GroupNoticeArgs.#ctor(System.Int64,System.Int64,System.String,System.String,System.String,System.Int64,System.Int64,System.Int64)">
@@ -1584,7 +1619,7 @@
         </member>
         <member name="M:AuroraNative.API.SetGroupSpecialTitle(System.Int64,System.Int64,System.String,System.Int32)">
             <summary>
-            设置群组专属头衔
+            设置群组成员专属头衔
             </summary>
             <param name="GroupID">群号</param>
             <param name="UserID">QQ号</param>
@@ -1627,6 +1662,12 @@
             获取好友列表
             </summary>
             <returns>错误返回null,成功返回JObject</returns>
+        </member>
+        <member name="M:AuroraNative.API.DeleteFriend(System.Int64)">
+            <summary>
+            删除好友
+            </summary>
+            <param name="UserID">好友QQ号</param>
         </member>
         <member name="M:AuroraNative.API.GetGroupInfo(System.Int64,System.Boolean)">
             <summary>
@@ -1846,6 +1887,28 @@
             </summary>
             <param name="URL">需要检测的链接</param>
             <returns>错误返回null,成功返回int</returns>
+        </member>
+        <member name="M:AuroraNative.API.GetModels(System.String)">
+            <summary>
+            获取在线机型
+            </summary>
+            <param name="ModelName">机型名字</param>
+            <returns>在线机型列表</returns>
+        </member>
+        <member name="M:AuroraNative.API.SetModel(System.String,System.String)">
+            <summary>
+            设置在线机型
+            </summary>
+            <param name="ModelName">机型名字</param>
+            <param name="ShowModelName">在线机型名字</param>
+        </member>
+        <member name="M:AuroraNative.API.DownloadGroupImage(System.Int64,System.String)">
+            <summary>
+            获取指定群头像
+            </summary>
+            <param name="GroupID">群号</param>
+            <param name="SaveTo">保存路径-包括文件名(通常后缀名是jpg)</param>
+            <returns>是否成功</returns>
         </member>
         <member name="T:AuroraNative.BaseAPI">
             <summary>

@@ -23,7 +23,7 @@ namespace AuroraNative.WebSockets
         internal JObject Json;
         internal int Port = 6700;
         internal static readonly System.Type[] AttributeTypes = Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsAbstract == false && p.IsInterface == false && typeof(Attribute).IsAssignableFrom(p)).ToArray();
-        internal static readonly Version DependencyVersion = new Version("0.9.40");
+        internal static readonly Version DependencyVersion = new Version("1.0.0");
         internal static bool IsCheckVersion = false;
 
         #endregion
