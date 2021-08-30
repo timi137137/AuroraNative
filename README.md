@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/badge/OneBot-v11-blue?style=flat-square">
 </a>
 <a href="https://github.com/Mrs4s/go-cqhttp/releases">
-    <img src="https://img.shields.io/badge/go--cqhttp-v0.9.40--fix5-blueviolet?style=flat-square">
+    <img src="https://img.shields.io/badge/go--cqhttp-v1.0.0--beta6-blueviolet?style=flat-square">
 </a>
 <img src="https://img.shields.io/github/license/timi137137/AuroraNative?style=flat-square">
 <img src="https://img.shields.io/github/workflow/status/timi137137/AuroraNative/BuildPackages/master?style=flat-square">
@@ -76,7 +76,7 @@
 
 感谢以下大佬对本框架开发的帮助
 
-[Jie2GG](https://github.com/Jie2GG) | [Yukari316](https://github.com/Yukari316) | [bleatingsheep](https://github.com/b11p)
+[Jie2GG](https://github.com/Jie2GG) | [bleatingsheep](https://github.com/b11p)
 
 ### 使用到的开源库
 

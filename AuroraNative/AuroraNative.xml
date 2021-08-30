@@ -2564,6 +2564,11 @@
             创建并连接到WebSocket服务器
             </summary>
         </member>
+        <member name="M:AuroraNative.WebSockets.Client.Create(System.String)">
+            <summary>
+            创建并连接到WebSocket服务器
+            </summary>
+        </member>
         <member name="M:AuroraNative.WebSockets.Client.Dispose">
             <summary>
             立刻中断并释放连接<para>注意！断开后需要重新Create</para>
@@ -2586,6 +2591,11 @@
             </summary>
             <param name="Event">重写后的事件类实例</param>
         </member>
+        <member name="M:AuroraNative.WebSockets.Server.Create(System.String)">
+            <summary>
+            创建WebSocket服务器并监听端口
+            </summary>
+        </member>
         <member name="M:AuroraNative.WebSockets.Server.Create">
             <summary>
             创建WebSocket服务器并监听端口
@@ -2604,6 +2614,11 @@
         <member name="M:AuroraNative.WebSockets.WebSocket.Create">
             <summary>
             客户端创建 抽象方法
+            </summary>
+        </member>
+        <member name="M:AuroraNative.WebSockets.WebSocket.Create(System.String)">
+            <summary>
+            服务端创建 抽象方法
             </summary>
         </member>
         <member name="M:AuroraNative.WebSockets.WebSocket.Dispose">

@@ -103,6 +103,14 @@ namespace AuroraNative.WebSockets
         }
 
         /// <summary>
+        /// 创建并连接到WebSocket服务器
+        /// </summary>
+        public override void Create(string Host = "")
+        {
+            Create();
+        }
+
+        /// <summary>
         /// 立刻中断并释放连接<para>注意！断开后需要重新Create</para>
         /// </summary>
         public override void Dispose()
