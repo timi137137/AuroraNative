@@ -35,6 +35,10 @@ namespace AuroraNative.WebSockets
         /// </summary>
         public abstract void Create();
         /// <summary>
+        /// 服务端创建 抽象方法
+        /// </summary>
+        public abstract void Create(string Host = "localhost");
+        /// <summary>
         /// 客户端销毁 抽象方法
         /// </summary>
         public abstract void Dispose();

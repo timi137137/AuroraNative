@@ -44,13 +44,13 @@ namespace AuroraNative.WebSockets
         /// <summary>
         /// 创建WebSocket服务器并监听端口
         /// </summary>
-        public override void Create()
+        public override void Create(string Host = "localhost")
         {
             try
             {
                 Logger.Debug("反向WebSocket已创建，准备监听...", $"{MethodBase.GetCurrentMethod().DeclaringType.Name}.{MethodBase.GetCurrentMethod().Name}");
                 Listener = new HttpListener();
-                Listener.Prefixes.Add("http://*:" + Port.ToString() + "/");
+                Listener.Prefixes.Add("http://" + Host + ":" + Port.ToString() + "/");
                 Listener.Start();
                 Logger.Info("开始监听来自 go-cqhttp 客户端的连接...");
                 Task.Run(Feedback);
@@ -65,6 +65,14 @@ namespace AuroraNative.WebSockets
                 Console.ReadKey();
                 Environment.Exit(0);
             }
+        }
+
+        /// <summary>
+        /// 创建WebSocket服务器并监听端口
+        /// </summary>
+        public override void Create()
+        {
+            Create();
         }
 
         /// <summary>

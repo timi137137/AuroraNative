@@ -4,6 +4,7 @@ using AuroraNative.EventArgs;
 using AuroraNative.WebSockets;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace AuroraNative
 {
@@ -242,13 +243,20 @@ namespace AuroraNative
         internal static async void CheckVersion()
         {
             Logger.Debug("开始检查 go-cqhttp 版本是否符合最低版本...");
-            if ((await API.CurrentApi.GetVersionInfo()).TryGetValue("AppVersion", out object Version) && new Version(Version.ToString().Substring(1, Version.ToString().IndexOf('-') - 1)) < WebSocket.DependencyVersion)
+            Dictionary<string, object> Versions = (await API.CurrentApi.GetVersionInfo());
+            if (Versions["AppVersion"].ToString().Contains("devel"))
             {
-                Logger.Warning($"框架最低依赖版本与 go-cqhttp 不符！请检查是否为最新的框架或符合的 go-cqhttp\ngo-cqhttp版本:{Version}\n框架最低依赖版本:v{WebSocket.DependencyVersion}");
+                Logger.Debug("go-cqhttp 版本为开发版，跳过检测");
             }
-            else
-            {
-                Logger.Debug("go-cqhttp 版本符合最低版本!");
+            else {
+                if (Versions.TryGetValue("AppVersion", out object Version) && new Version(Version.ToString().Substring(1, Version.ToString().IndexOf('-') - 1)) < WebSocket.DependencyVersion)
+                {
+                    Logger.Warning($"框架最低依赖版本与 go-cqhttp 不符！请检查是否为最新的框架或符合的 go-cqhttp\ngo-cqhttp版本:{Version}\n框架最低依赖版本:v{WebSocket.DependencyVersion}");
+                }
+                else
+                {
+                    Logger.Debug("go-cqhttp 版本符合最低版本!");
+                }
             }
             WebSocket.IsCheckVersion = true;
         }
