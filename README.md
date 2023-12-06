@@ -28,6 +28,11 @@
 
 ---
 
+## 重要信息
+**由于go-cqhttp项目遭到不可抗力因素,故此本项目做归档处理.**
+
+详细请看链接 -> https://github.com/Mrs4s/go-cqhttp/issues/2471
+
 ## 介绍
 
 这是一个基于 go-cqhttp 实现的C#机器人开发框架
